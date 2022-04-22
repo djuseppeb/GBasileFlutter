@@ -26,25 +26,25 @@ class AppDrawer extends StatelessWidget {
             //Profilo, Home page, Preferiti, Ricerca
             ListTile(
               onTap: () => Navigator.of(context).popAndPushNamed("/home"),
-              leading: Icon(Icons.home),
-              title: Text("Home"),
+              leading: const Icon(Icons.home),
+              title: const Text("Home"),
             ),
             ListTile(
               onTap: () => Navigator.of(context).popAndPushNamed("/profile"),
-              leading: Icon(Icons.person),
-              title: Text("Account"),
+              leading: const Icon(Icons.person),
+              title: const Text("Account"),
             ),
             ListTile(
               onTap: () => Navigator.of(context).popAndPushNamed("/favorite"),
-              leading: Icon(Icons.star),
-              title: Text("Favorite"),
+              leading: const Icon(Icons.star),
+              title: const Text("Favorite"),
             ),
             ListTile(
               onTap: () => Navigator.of(context).popAndPushNamed("/mete"),
-              leading: Icon(Icons.travel_explore),
-              title: Text("Global Search"),
+              leading: const Icon(Icons.travel_explore),
+              title: const Text("Global Search"),
             ),
-            ListTile(
+            const ListTile(
               leading: Icon(Icons.logout),
               title: Text("Log Out"),
             )

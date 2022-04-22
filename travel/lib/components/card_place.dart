@@ -1,12 +1,11 @@
 import 'package:flutter/material.dart';
+import 'package:travel/models/meta_turistica.dart';
 
 import '../Pages/details_page.dart';
 
 class CardPlace extends StatelessWidget {
-  final String city;
-  final String country;
-  final String imgUrl;
-  const CardPlace({Key? key, required this.city, required this.country, required this.imgUrl}) : super(key: key);
+  final MetaTuristica meta;
+  const CardPlace(this.meta, {Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -15,9 +14,9 @@ class CardPlace extends StatelessWidget {
       child: AspectRatio(
         aspectRatio: 1,
         child: GestureDetector(
-          onTap: () => {},/*Navigator.of(context).push(
-            MaterialPageRoute(builder: (context) => DetailsPage(meta: null,))
-          ),*/
+          onTap: () =>Navigator.of(context).push(
+            MaterialPageRoute(builder: (context) => DetailsPage(meta))
+          ),
           child: Card(
             child: Padding(
               padding: const EdgeInsets.all(8.0),
@@ -32,7 +31,7 @@ class CardPlace extends StatelessWidget {
                         decoration: BoxDecoration(
                           borderRadius: BorderRadius.circular(12),
                           image: DecorationImage(
-                            image: NetworkImage(imgUrl),
+                            image: NetworkImage(meta.imageUrl),
                             fit: BoxFit.cover
                           )
                         ),
@@ -41,7 +40,7 @@ class CardPlace extends StatelessWidget {
                   ),
                   Padding(
                     padding: const EdgeInsets.symmetric(vertical: 4.0),
-                    child: Text(city, style: TextStyle(fontSize: 18),),
+                    child: Text(meta.city, style: const TextStyle(fontSize: 18),),
                   ),
                   Padding(
                     padding: const EdgeInsets.only(bottom: 8.0),
@@ -49,7 +48,7 @@ class CardPlace extends StatelessWidget {
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: [
                           const Icon(Icons.location_on, size: 14, color: Colors.blue,),
-                          Text(country, style: TextStyle(fontSize: 14, color: Colors.blue))
+                          Text(meta.country, style: const TextStyle(fontSize: 14, color: Colors.blue))
                         ]
                     ),
                   )
