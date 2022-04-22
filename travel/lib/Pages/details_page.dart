@@ -53,173 +53,180 @@ class DetailsPage extends StatelessWidget {
               ),
             ),
 
-            Stack(
-              clipBehavior: Clip.none,
-              children: [
-                Positioned(
-                  top: 100,
-                  child: Container(
-                    width: MediaQuery.of(context).size.width,
-                    clipBehavior: Clip.hardEdge,
-                    padding: const EdgeInsets.symmetric(
-                        horizontal: 16, vertical: 46),
-                    decoration: BoxDecoration(
-                        color: Colors.white,
-                        borderRadius: BorderRadius.circular(24)),
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        const CarouselTitle("Great Place to visit"),
-                        Text(meta.description),
-
-                        const SizedBox(height: 14),
-
-                        const CarouselTitle("Pictures"),
-                        SizedBox(
-                          height: 100,
-                          child: ListView(
-                            physics: const BouncingScrollPhysics(),
-                            scrollDirection: Axis.horizontal,
-                            children: [
-                              Padding(
-                                padding: const EdgeInsets.only(right: 8.0),
-                                child: Container(
-                                  width: 100,
-                                  height: 100,
-                                  decoration: BoxDecoration(
-                                      borderRadius: BorderRadius.circular(12),
-                                      image: const DecorationImage(
-                                        image: NetworkImage(
-                                            "https://www.ansa.it/webimages/img_457x/2022/1/11/13f036403c0422c051a142c6214988da.jpg"),
-                                        fit: BoxFit.cover,
-                                      )),
-                                ),
-                              ),
-                              Padding(
-                                padding: const EdgeInsets.only(right: 8.0),
-                                child: Container(
-                                  width: 100,
-                                  height: 100,
-                                  decoration: BoxDecoration(
-                                      borderRadius: BorderRadius.circular(12),
-                                      image: const DecorationImage(
-                                        image: NetworkImage(
-                                            "https://www.ansa.it/webimages/img_457x/2022/1/11/13f036403c0422c051a142c6214988da.jpg"),
-                                        fit: BoxFit.cover,
-                                      )),
-                                ),
-                              ),
-                              Padding(
-                                padding: const EdgeInsets.only(right: 8.0),
-                                child: Container(
-                                  width: 100,
-                                  height: 100,
-                                  decoration: BoxDecoration(
-                                      borderRadius: BorderRadius.circular(12),
-                                      image: const DecorationImage(
-                                        image: NetworkImage(
-                                            "https://www.ansa.it/webimages/img_457x/2022/1/11/13f036403c0422c051a142c6214988da.jpg"),
-                                        fit: BoxFit.cover,
-                                      )),
-                                ),
-                              ),
-                              Padding(
-                                padding: const EdgeInsets.only(right: 8.0),
-                                child: Container(
-                                  width: 100,
-                                  height: 100,
-                                  decoration: BoxDecoration(
-                                      borderRadius: BorderRadius.circular(12),
-                                      image: const DecorationImage(
-                                        image: NetworkImage(
-                                            "https://www.ansa.it/webimages/img_457x/2022/1/11/13f036403c0422c051a142c6214988da.jpg"),
-                                        fit: BoxFit.cover,
-                                      )),
-                                ),
-                              ),
-                              Padding(
-                                padding: const EdgeInsets.only(right: 8.0),
-                                child: Container(
-                                  width: 100,
-                                  height: 100,
-                                  decoration: BoxDecoration(
-                                      borderRadius: BorderRadius.circular(12),
-                                      image: const DecorationImage(
-                                        image: NetworkImage(
-                                            "https://www.ansa.it/webimages/img_457x/2022/1/11/13f036403c0422c051a142c6214988da.jpg"),
-                                        fit: BoxFit.cover,
-                                      )),
-                                ),
-                              )
-                            ],
-                          ),
-                        ),
-
-                        //MAPPA
-                        Padding(
-                          padding: const EdgeInsets.symmetric(vertical: 12),
-                          child: Container(
-                              width: MediaQuery.of(context).size.width,
-                              height: 100,
-                              decoration: BoxDecoration(
-                                  color: Colors.lightBlueAccent,
-                                  borderRadius: BorderRadius.circular(12),
-                                  image: const DecorationImage(
-                                    image: NetworkImage(
-                                        "https://www.ansa.it/webimages/img_457x/2022/1/11/13f036403c0422c051a142c6214988da.jpg"),
-                                    fit: BoxFit.cover,
-                                  ))),
-                        ),
-
-                        //PREZZO + PULSANTE
-                        Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            Expanded(
+              child: Padding(
+                padding: const EdgeInsets.only(top: 100.0),
+                child: Stack(
+                  clipBehavior: Clip.none,
+                  children: [
+                    SingleChildScrollView(
+                      child: Container(
+                        margin: const EdgeInsets.only(top:100),
+                        height: MediaQuery.of(context).size.height,
+                        width: MediaQuery.of(context).size.width,
+                        clipBehavior: Clip.hardEdge,
+                        padding: const EdgeInsets.symmetric(
+                            horizontal: 16, vertical: 46),
+                        decoration: BoxDecoration(
+                            color: Colors.white,
+                            borderRadius: BorderRadius.circular(24)),
+                        child: ListView(
+                          shrinkWrap: true,
+                          //mainAxisSize: MainAxisSize.max,
+                          //crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
-                            Column(
+                            const CarouselTitle("Great Place to visit"),
+                            Text(meta.description),
+
+                            const SizedBox(height: 14),
+
+                            const CarouselTitle("Pictures"),
+                            SizedBox(
+                              height: 100,
+                              child: ListView(
+                                scrollDirection: Axis.horizontal,
+                                children: [
+                                  Padding(
+                                    padding: const EdgeInsets.only(right: 8.0),
+                                    child: Container(
+                                      width: 100,
+                                      height: 100,
+                                      decoration: BoxDecoration(
+                                          borderRadius: BorderRadius.circular(12),
+                                          image: const DecorationImage(
+                                            image: NetworkImage(
+                                                "https://www.ansa.it/webimages/img_457x/2022/1/11/13f036403c0422c051a142c6214988da.jpg"),
+                                            fit: BoxFit.cover,
+                                          )),
+                                    ),
+                                  ),
+                                  Padding(
+                                    padding: const EdgeInsets.only(right: 8.0),
+                                    child: Container(
+                                      width: 100,
+                                      height: 100,
+                                      decoration: BoxDecoration(
+                                          borderRadius: BorderRadius.circular(12),
+                                          image: const DecorationImage(
+                                            image: NetworkImage(
+                                                "https://www.ansa.it/webimages/img_457x/2022/1/11/13f036403c0422c051a142c6214988da.jpg"),
+                                            fit: BoxFit.cover,
+                                          )),
+                                    ),
+                                  ),
+                                  Padding(
+                                    padding: const EdgeInsets.only(right: 8.0),
+                                    child: Container(
+                                      width: 100,
+                                      height: 100,
+                                      decoration: BoxDecoration(
+                                          borderRadius: BorderRadius.circular(12),
+                                          image: const DecorationImage(
+                                            image: NetworkImage(
+                                                "https://www.ansa.it/webimages/img_457x/2022/1/11/13f036403c0422c051a142c6214988da.jpg"),
+                                            fit: BoxFit.cover,
+                                          )),
+                                    ),
+                                  ),
+                                  Padding(
+                                    padding: const EdgeInsets.only(right: 8.0),
+                                    child: Container(
+                                      width: 100,
+                                      height: 100,
+                                      decoration: BoxDecoration(
+                                          borderRadius: BorderRadius.circular(12),
+                                          image: const DecorationImage(
+                                            image: NetworkImage(
+                                                "https://www.ansa.it/webimages/img_457x/2022/1/11/13f036403c0422c051a142c6214988da.jpg"),
+                                            fit: BoxFit.cover,
+                                          )),
+                                    ),
+                                  ),
+                                  Padding(
+                                    padding: const EdgeInsets.only(right: 8.0),
+                                    child: Container(
+                                      width: 100,
+                                      height: 100,
+                                      decoration: BoxDecoration(
+                                          borderRadius: BorderRadius.circular(12),
+                                          image: const DecorationImage(
+                                            image: NetworkImage(
+                                                "https://www.ansa.it/webimages/img_457x/2022/1/11/13f036403c0422c051a142c6214988da.jpg"),
+                                            fit: BoxFit.cover,
+                                          )),
+                                    ),
+                                  )
+                                ],
+                              ),
+                            ),
+
+                            //MAPPA
+                            Padding(
+                              padding: const EdgeInsets.symmetric(vertical: 12),
+                              child: Container(
+                                  width: MediaQuery.of(context).size.width,
+                                  height: 100,
+                                  decoration: BoxDecoration(
+                                      color: Colors.lightBlueAccent,
+                                      borderRadius: BorderRadius.circular(12),
+                                      image: const DecorationImage(
+                                        image: NetworkImage(
+                                            "https://www.ansa.it/webimages/img_457x/2022/1/11/13f036403c0422c051a142c6214988da.jpg"),
+                                        fit: BoxFit.cover,
+                                      ))),
+                            ),
+
+                            //PREZZO + PULSANTE
+                            Row(
+                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
                               children: [
-                                Text(
-                                  "\$ ${meta.minPrice}",
-                                  style: const TextStyle(
-                                      fontSize: 20,
-                                      fontWeight: FontWeight.bold),
+                                Column(
+                                  children: [
+                                    Text(
+                                      "\$ ${meta.minPrice}",
+                                      style: const TextStyle(
+                                          fontSize: 20,
+                                          fontWeight: FontWeight.bold),
+                                    ),
+                                    const Text(
+                                      "Minimum Price",
+                                      style: TextStyle(
+                                          color: Colors.black87, fontSize: 14),
+                                    )
+                                  ],
                                 ),
-                                const Text(
-                                  "Minimum Price",
-                                  style: TextStyle(
-                                      color: Colors.black87, fontSize: 14),
+                                ElevatedButton(
+                                  onPressed: () => ScaffoldMessenger.of(context)
+                                      .showSnackBar(const SnackBar(
+                                          content: Text("Book failed, this app is not real lmao"))),
+                                  child: const Text(
+                                    "Book now",
+                                    style: TextStyle(color: Colors.white),
+                                  ),
+                                  style: ButtonStyle(
+                                      padding: MaterialStateProperty.all(
+                                          const EdgeInsets.symmetric(
+                                              horizontal: 80)),
+                                      backgroundColor:
+                                          MaterialStateProperty.all(Colors.blue),
+                                  ),
                                 )
                               ],
-                            ),
-                            TextButton(
-                              onPressed: () => ScaffoldMessenger.of(context)
-                                  .showSnackBar(const SnackBar(
-                                      content: Text("Added to favorites"))),
-                              child: const Text(
-                                "Book now",
-                                style: TextStyle(color: Colors.white),
-                              ),
-                              style: ButtonStyle(
-                                  padding: MaterialStateProperty.all(
-                                      const EdgeInsets.symmetric(
-                                          horizontal: 80)),
-                                  backgroundColor:
-                                      MaterialStateProperty.all(Colors.blue),
-                              ),
                             )
                           ],
-                        )
-                      ],
+                        ),
+                      ),
                     ),
-                  ),
+                    Padding(
+                      padding: const EdgeInsets.all(24.0),
+                      child: PlaceMainCard(
+                          city: meta.city,
+                          country: meta.country,
+                          rating: meta.rating),
+                    ),
+                  ],
                 ),
-                Padding(
-                  padding: const EdgeInsets.all(24.0),
-                  child: PlaceMainCard(
-                      city: meta.city,
-                      country: meta.country,
-                      rating: meta.rating),
-                ),
-              ],
+              ),
             )
           ],
         ),

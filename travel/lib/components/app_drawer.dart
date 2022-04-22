@@ -40,7 +40,7 @@ class AppDrawer extends StatelessWidget {
               title: const Text("Favorite"),
             ),
             ListTile(
-              onTap: () => Navigator.of(context).popAndPushNamed("/mete"),
+              onTap: () => Navigator.of(context).popAndPushNamed("/search"),
               leading: const Icon(Icons.travel_explore),
               title: const Text("Global Search"),
             ),

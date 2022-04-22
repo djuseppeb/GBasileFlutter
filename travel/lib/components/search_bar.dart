@@ -1,17 +1,26 @@
 import 'package:flutter/material.dart';
 
 class SearchBar extends StatelessWidget {
-  const SearchBar({Key? key}) : super(key: key);
+  final bool isHomePage;
+  final Function(String)? callback;
+  const SearchBar({Key? key, this.isHomePage=false, this.callback}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     return Row(
       children: [
-        const Expanded(
+        Expanded(
           child: Padding(
-            padding: EdgeInsets.symmetric(vertical: 16.0),
+            padding: const EdgeInsets.symmetric(vertical: 16.0),
             child: TextField(
-              decoration: InputDecoration(
+              onTap: isHomePage ? () {
+                FocusScope.of(context).unfocus();
+                Navigator.of(context).pushNamed("/search");
+              } : null,
+              onChanged: callback,
+              readOnly: isHomePage,
+              autofocus: !isHomePage,
+              decoration: const InputDecoration(
                   hintText: "Search",
                   suffixIcon: Icon(Icons.search),
                   border: OutlineInputBorder()
@@ -26,7 +35,8 @@ class SearchBar extends StatelessWidget {
               color: Colors.lightBlue.shade100,
               borderRadius: BorderRadius.circular(6)
           ),
-          child: IconButton(onPressed: () => print("cerco cose"), icon: const Icon(Icons.filter_list, color: Colors.blue,),),)
+          child: IconButton(onPressed: () => print("cerco cose"), icon: const Icon(Icons.filter_list, color: Colors.blue,),),
+        )
       ],
     );
   }

@@ -11,6 +11,6 @@ generateRoutes(){
     '/profile' : (context) => const Center(child: Account()),
     '/details' : (context) => const Center(child: Text('Dettagli')),
     '/favorite' : (context) => const Center(child: Favorites()),
-    '/mete' : (context) => const Center(child: GlobalSearch())
+    '/search' : (context) => const Center(child: GlobalSearch())
   };
 }

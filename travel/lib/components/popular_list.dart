@@ -1,8 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:travel/components/carousel_title.dart';
 import 'package:travel/models/meta_turistica.dart';
-
-import 'card_place.dart';
+import 'package:travel/components/card_place.dart';
 
 class PopularList extends StatelessWidget {
   const PopularList({Key? key}) : super(key: key);
@@ -18,10 +17,10 @@ class PopularList extends StatelessWidget {
           child: ListView.builder(
             scrollDirection: Axis.horizontal,
             itemCount: MetaTuristica.listaMete.length,
-            itemBuilder: (context, index){
-              if(MetaTuristica.listaMete[index].raccomanded){
+            itemBuilder: (context, index) {
+              if (MetaTuristica.listaMete[index].raccomanded) {
                 return CardPlace(
-                    MetaTuristica.listaMete[index],
+                  MetaTuristica.listaMete[index],
                 );
               }
               return const SizedBox(width: 0);

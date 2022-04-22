@@ -21,7 +21,7 @@ class Home extends StatelessWidget {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: const [
               CategoryList(),
-              SearchBar(),
+              SearchBar(isHomePage: true),
               PopularList(),
               SizedBox(height: 24),
               RecommendedList(),

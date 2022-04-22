@@ -4,17 +4,19 @@ class PlaceMainCard extends StatelessWidget {
   final String city;
   final String country;
   final int rating;
-  const PlaceMainCard({Key? key, required this.city, required this.country, required this.rating}) : super(key: key);
+  const PlaceMainCard(
+      {Key? key,
+      required this.city,
+      required this.country,
+      required this.rating})
+      : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     return Card(
-      shape: RoundedRectangleBorder(
-        borderRadius: BorderRadius.circular(24)
-      ),
+      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(24)),
       child: Padding(
-        padding:
-        const EdgeInsets.symmetric(horizontal: 8.0, vertical: 24),
+        padding: const EdgeInsets.symmetric(horizontal: 8.0, vertical: 24),
         child: Column(
           children: [
             Row(
@@ -33,8 +35,8 @@ class PlaceMainCard extends StatelessWidget {
                       size: 14,
                     ),
                     Text(country,
-                        style: const TextStyle(
-                            fontSize: 14, color: Colors.blue)),
+                        style:
+                            const TextStyle(fontSize: 14, color: Colors.blue)),
                   ],
                 )
               ],
@@ -60,8 +62,7 @@ class PlaceMainCard extends StatelessWidget {
                       color: Colors.amber,
                       size: 14,
                     ),
-                    Text("$rating",
-                        style: const TextStyle(fontSize: 14)),
+                    Text("$rating", style: const TextStyle(fontSize: 14)),
                   ],
                 ),
                 Row(
@@ -71,8 +72,7 @@ class PlaceMainCard extends StatelessWidget {
                       color: Colors.purple,
                       size: 14,
                     ),
-                    Text("12 MPH France",
-                        style: TextStyle(fontSize: 14)),
+                    Text("12 MPH France", style: TextStyle(fontSize: 14)),
                   ],
                 ),
               ],
@@ -81,6 +81,5 @@ class PlaceMainCard extends StatelessWidget {
         ),
       ),
     );
-
   }
 }
