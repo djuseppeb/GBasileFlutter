@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:travel/components/app_drawer.dart';
 import 'package:travel/components/category_list.dart';
 import 'package:travel/components/popular_list.dart';
 import 'package:travel/components/search_bar.dart';
@@ -36,7 +37,7 @@ class Home extends StatelessWidget {
           )
         ],
       ),
-      drawer: Drawer(),
+      drawer: const AppDrawer(),
       body: Padding(
         padding: const EdgeInsets.symmetric(vertical: 8.0, horizontal: 24),
         child: SingleChildScrollView(
