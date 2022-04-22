@@ -16,7 +16,7 @@ class CardPlace extends StatelessWidget {
         aspectRatio: 1,
         child: GestureDetector(
           onTap: () => Navigator.of(context).push(
-            MaterialPageRoute(builder: (context) => DetailsPage(meta: null,))
+            //MaterialPageRoute(builder: (context) => DetailsPage(meta: null,))
           ),
           child: Card(
             child: Padding(
