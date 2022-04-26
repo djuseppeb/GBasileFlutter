@@ -44,13 +44,13 @@ class AppDrawer extends StatelessWidget {
               leading: const Icon(Icons.travel_explore),
               title: const Text("Global Search"),
             ),
-            const ListTile(
+            ListTile(
+              onTap: () => Navigator.of(context).popAndPushNamed("/"),
               leading: Icon(Icons.logout),
               title: Text("Log Out"),
             )
           ],
         ),
-
       ),
     );
   }
