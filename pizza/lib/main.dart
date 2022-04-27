@@ -51,6 +51,11 @@ class _MyHomePageState extends State<MyHomePage> {
   }
   
   void removeFavorite(String id) async {
+    setState(() {
+      _preferiti.remove(id); //aggiungo l'id del preferito alla lista
+    });
+    SharedPreferences sp = await SharedPreferences.getInstance();
+    sp.setStringList('preferiti', _preferiti); //lo salvo permanentemente
   }
 
   @override
@@ -75,7 +80,7 @@ class _MyHomePageState extends State<MyHomePage> {
            trailing: IconButton(
              icon: _preferiti.contains(nPizza.id) ? const Icon(Icons.favorite, color: Colors.red,) : const Icon(Icons.favorite_border),
              onPressed: (){
-               addFavorite(nPizza.id);
+               _preferiti.contains(nPizza.id) ? removeFavorite(nPizza.id) : addFavorite(nPizza.id);
                },
            ),
          );
