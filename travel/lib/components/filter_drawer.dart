@@ -8,6 +8,7 @@ class FilterDrawer extends StatefulWidget {
   final bool? recommended;
   final RangeValues selectedPrice;
   final Function ({int minRating, int maxRating, int minPrice, int maxPrice, String? country, bool? available, bool? recommended}) setFilters;
+
   const FilterDrawer({required this.selectedRating, Key? key, this.selectedCountry, this.available = false, required this.setFilters, required this.selectedPrice, this.recommended = false}) : super(key: key);
 
   @override
@@ -41,6 +42,7 @@ class _FilterDrawerState extends State<FilterDrawer> {
   Widget build(BuildContext context) {
     return Drawer(
       child: SafeArea(
+        minimum: const  EdgeInsets.symmetric(horizontal: 16),
         child: Padding(
           padding: const EdgeInsets.all(8.0),
           child: Column(
@@ -55,19 +57,21 @@ class _FilterDrawerState extends State<FilterDrawer> {
                         Row(
                           children: [
                             const Text("1"),
-                            RangeSlider(
-                              min: 1,
-                              max: 5,
-                              divisions: 4,
-                              values: _selectedRating,
-                              onChanged: (RangeValues value) {
-                                setState(() {
-                                  _selectedRating = value;
-                                });
-                              },
-                              labels: RangeLabels(
-                                _selectedRating.start.toInt().toString(),
-                                _selectedRating.end.toInt().toString()
+                            Expanded(
+                              child: RangeSlider(
+                                min: 1,
+                                max: 5,
+                                divisions: 4,
+                                values: _selectedRating,
+                                onChanged: (RangeValues value) {
+                                  setState(() {
+                                    _selectedRating = value;
+                                  });
+                                },
+                                labels: RangeLabels(
+                                  _selectedRating.start.toInt().toString(),
+                                  _selectedRating.end.toInt().toString()
+                                ),
                               ),
                             ),
                             const Text("5"),
@@ -78,19 +82,21 @@ class _FilterDrawerState extends State<FilterDrawer> {
                         Row(
                           children: [
                             const Text("0\$"),
-                            RangeSlider(
-                              min: 0,
-                              max: 1000,
-                              divisions: 20,
-                              values: _selectedPrice,
-                              onChanged: (RangeValues value) {
-                                setState(() {
-                                  _selectedPrice = value;
-                                });
-                              },
-                              labels: RangeLabels(
-                                  _selectedPrice.start.toInt().toString(),
-                                  _selectedPrice.end.toInt().toString()
+                            Expanded(
+                              child: RangeSlider(
+                                min: 0,
+                                max: 1000,
+                                divisions: 20,
+                                values: _selectedPrice,
+                                onChanged: (RangeValues value) {
+                                  setState(() {
+                                    _selectedPrice = value;
+                                  });
+                                },
+                                labels: RangeLabels(
+                                    _selectedPrice.start.toInt().toString(),
+                                    _selectedPrice.end.toInt().toString()
+                                ),
                               ),
                             ),
                             const Text("1000\$"),

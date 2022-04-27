@@ -37,9 +37,14 @@ class SearchBar extends StatelessWidget {
           ),
           child: IconButton(
             onPressed: () {
-              if(Scaffold.of(context).hasEndDrawer){
-                Scaffold.of(context).openEndDrawer();
+              if (isHomePage){
+                Navigator.of(context).pushNamed('/search', arguments: [{'openDrawer' : true}]);
+              } else {
+                if(Scaffold.of(context).hasEndDrawer){
+                  Scaffold.of(context).openEndDrawer();
+                }
               }
+
             },
             icon: const Icon(Icons.filter_list, color: Colors.blue,),),
         )

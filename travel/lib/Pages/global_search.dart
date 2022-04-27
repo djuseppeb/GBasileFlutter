@@ -41,11 +41,11 @@ class _GlobalSearchState extends State<GlobalSearch> {
     _scaffoldkey = GlobalKey();
 
     SchedulerBinding.instance?.addPostFrameCallback((timeStamp) {
-      final modalArgs = ModalRoute.of(context)?.settings.arguments ?? [];
+      final modalArgs = ModalRoute.of(context)?.settings.arguments ?? {};
       if(modalArgs is List
           && modalArgs.isNotEmpty
           && modalArgs[0] is Map<String, dynamic>
-          && modalArgs[0]['filterOpen'] == true){
+          && modalArgs[0]['openDrawer'] == true){
         _scaffoldkey.currentState?.openEndDrawer();
       }
     });
