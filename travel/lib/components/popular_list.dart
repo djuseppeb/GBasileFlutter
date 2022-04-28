@@ -18,7 +18,7 @@ class PopularList extends StatelessWidget {
             scrollDirection: Axis.horizontal,
             itemCount: MetaTuristica.listaMete.length,
             itemBuilder: (context, index) {
-              if (MetaTuristica.listaMete[index].raccomanded) {
+              if (MetaTuristica.listaMete[index].recommended) {
                 return CardPlace(
                   MetaTuristica.listaMete[index],
                 );

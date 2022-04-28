@@ -77,7 +77,7 @@ class _GlobalSearchState extends State<GlobalSearch> {
               && (country == null || risultato.country == country)
               && (available == null || risultato.available == available)
               && risultato.minPrice >= minPrice && risultato.minPrice <= maxPrice
-              && (recommended == null || risultato.raccomanded == recommended);
+              && (recommended == null || risultato.recommended == recommended);
       }).toList();
     });
   }

@@ -1,19 +1,25 @@
 import 'package:flutter/material.dart';
+import 'package:travel/components/favorite_button.dart';
 import 'package:travel/components/carousel_title.dart';
 import 'package:travel/components/place_main_card.dart';
 import 'package:travel/models/meta_turistica.dart';
 
-class DetailsPage extends StatelessWidget {
+class DetailsPage extends StatefulWidget {
   final MetaTuristica meta;
   const DetailsPage(this.meta, {Key? key}) : super(key: key);
 
+  @override
+  State<DetailsPage> createState() => _DetailsPageState();
+}
+
+class _DetailsPageState extends State<DetailsPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       body: Container(
         decoration: BoxDecoration(
           image: DecorationImage(
-              image: NetworkImage(meta.imageUrl), fit: BoxFit.cover),
+              image: NetworkImage(widget.meta.imageUrl), fit: BoxFit.cover),
         ),
         child: Column(
           mainAxisSize: MainAxisSize.min,
@@ -36,19 +42,7 @@ class DetailsPage extends StatelessWidget {
                           color: Colors.black,
                         )),
                   ),
-                  Container(
-                    decoration: BoxDecoration(
-                        color: Colors.white,
-                        borderRadius: BorderRadius.circular(12)),
-                    child: IconButton(
-                        onPressed: () => ScaffoldMessenger.of(context)
-                            .showSnackBar(const SnackBar(
-                                content: Text("Added to favorites"))),
-                        icon: const Icon(
-                          Icons.bookmark,
-                          color: Colors.black,
-                        )),
-                  ),
+                  FavoriteButton(widget.meta),
                 ],
               ),
             ),
@@ -74,7 +68,7 @@ class DetailsPage extends StatelessWidget {
                         //crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
                           const CarouselTitle("Great Place to visit"),
-                          Text(meta.description),
+                          Text(widget.meta.description),
 
                           const SizedBox(height: 14),
 
@@ -181,7 +175,7 @@ class DetailsPage extends StatelessWidget {
                               Column(
                                 children: [
                                   Text(
-                                    "\$ ${meta.minPrice}",
+                                    "\$ ${widget.meta.minPrice}",
                                     style: const TextStyle(
                                         fontSize: 20,
                                         fontWeight: FontWeight.bold),
@@ -217,9 +211,9 @@ class DetailsPage extends StatelessWidget {
                     Padding(
                       padding: const EdgeInsets.all(24.0),
                       child: PlaceMainCard(
-                          city: meta.city,
-                          country: meta.country,
-                          rating: meta.rating),
+                          city: widget.meta.city,
+                          country: widget.meta.country,
+                          rating: widget.meta.rating),
                     ),
                   ],
                 ),
