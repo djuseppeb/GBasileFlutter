@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class AppDrawer extends StatelessWidget {
   const AppDrawer({Key? key}) : super(key: key);
@@ -45,9 +46,13 @@ class AppDrawer extends StatelessWidget {
               title: const Text("Global Search"),
             ),
             ListTile(
-              onTap: () => Navigator.of(context).popAndPushNamed("/"),
-              leading: Icon(Icons.logout),
-              title: Text("Log Out"),
+              onTap: () async {
+                SharedPreferences sp = await SharedPreferences.getInstance();
+                sp.setBool('logged', false);
+                Navigator.of(context).pushNamedAndRemoveUntil('/', (Route<dynamic> route) => false);
+              },
+              leading: const Icon(Icons.logout),
+              title: const Text("Log Out"),
             )
           ],
         ),

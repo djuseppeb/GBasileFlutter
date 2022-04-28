@@ -1,8 +1,12 @@
 import 'package:flutter/material.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import 'package:travel/components/login_field.dart';
 
 class Login extends StatelessWidget {
   const Login({Key? key}) : super(key: key);
+
+
+
 
   @override
   Widget build(BuildContext context) {
@@ -37,8 +41,10 @@ class Login extends StatelessWidget {
                   padding: const EdgeInsets.symmetric(horizontal: 4, vertical: 16),
                   child: LoginField(controller: _controllerPassword, fieldName: 'Password', hidden: true,),
                 ),
-                ElevatedButton(onPressed: () {
+                ElevatedButton(onPressed: () async {
                   if (_formKey.currentState!.validate()){
+                    SharedPreferences sp = await SharedPreferences.getInstance();
+                    sp.setBool('logged', true);
                     Navigator.of(context).popAndPushNamed("/home");
                   }
                 }, child: const Text("Login", style: TextStyle(fontWeight: FontWeight.bold, fontSize: 18),))

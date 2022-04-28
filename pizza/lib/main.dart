@@ -37,7 +37,6 @@ class _MyHomePageState extends State<MyHomePage> {
   void initFavorites() async{
     SharedPreferences sp = await SharedPreferences.getInstance();
     setState(() {
-      //sp = await SharedPreferences.getInstance();
       _preferiti = sp.getStringList('preferiti') ?? [];
     });
   }
