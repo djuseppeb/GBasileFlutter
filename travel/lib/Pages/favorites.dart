@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:travel/components/app_drawer.dart';
 import 'package:travel/components/carousel_title.dart';
+import 'package:travel/components/favorite_button.dart';
 import 'package:travel/components/search_card.dart';
 import 'package:travel/components/top_bar.dart';
 
@@ -23,16 +24,14 @@ class _FavoritesState extends State<Favorites> {
     setState(() {
       _preferiti = sp.getStringList('preferiti') ?? [];
 
-      for(int i=0; i < MetaTuristica.listaMete.length; i++){
-        if (_preferiti.contains(MetaTuristica.listaMete[i].city)){
-          _listaPreferiti.add(MetaTuristica.listaMete[i]);
+      //Genero lista mete preferite
+      for (var meta in MetaTuristica.listaMete) {
+        if (_preferiti.contains(meta.city)){
+          _listaPreferiti.add(meta);
         }
       }
 
     });
-
-
-
   }
 
   @override
@@ -53,7 +52,12 @@ class _FavoritesState extends State<Favorites> {
             child: ListView.builder(
                 itemCount: _listaPreferiti.length,
                 itemBuilder: (context, index) {
-                  return SearchCard(_listaPreferiti[index]);
+                  return Row(
+                    children: [
+                      SearchCard(_listaPreferiti[index]),
+                      FavoriteButton(_listaPreferiti[index])
+                    ],
+                  );
                   },
             ),
           ),
