@@ -71,6 +71,7 @@ class _HomeState extends State<Home> {
                       return const Center(child: CircularProgressIndicator(),);
                     }
                     return Container(
+                      margin: const EdgeInsets.symmetric(vertical: 20),
                       //width: MediaQuery.of(context).size.width,
                       clipBehavior: Clip.hardEdge,
                       decoration: const BoxDecoration(),
