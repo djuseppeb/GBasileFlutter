@@ -14,7 +14,7 @@ class Address{
   final String postalCode;
   final String state;
 
-  const Address({required this.address, this.city, required this.coordinates, required this.postalCode, required this.state});
+  const Address({required this.address, required this.city, required this.coordinates, required this.postalCode, required this.state});
 
   factory Address.fromJson(Map<String, dynamic> json) => _$AddressFromJson(json);
 
