@@ -34,7 +34,7 @@ class User {
   final String macAddress;
   final String university;
   final Bank bank;
-  //final Company company;
+  final Company company;
   final String ein;
   final String ssn;
   final String userAgent;
@@ -59,7 +59,7 @@ class User {
       required this.macAddress,
       required this.university,
       required this.bank,
-      //required this.company,
+      required this.company,
       required this.ein,
       required this.ssn,
       required this.userAgent,
