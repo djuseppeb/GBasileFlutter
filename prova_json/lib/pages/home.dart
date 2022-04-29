@@ -23,6 +23,7 @@ class Home extends StatelessWidget {
                 itemBuilder: (context, index){
                   return ListTile(
                     title: Text("${listUser[index].firstName} ${listUser[index].lastName}"),
+                    subtitle: Text(listUser[index].phone),
                   );
                 }
             );
