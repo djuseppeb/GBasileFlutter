@@ -1,3 +1,4 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:prova_json/api/api_user.dart';
 import 'package:prova_json/models/user_response.dart';
@@ -69,9 +70,63 @@ class _HomeState extends State<Home> {
                       _future = _fetchUsers();
                       return const Center(child: CircularProgressIndicator(),);
                     }
-                    return ListTile(
-                      title: Text("${listUser[index].firstName} ${listUser[index].lastName}"),
-                      subtitle: Text(listUser[index].phone),
+                    return Container(
+                      //width: MediaQuery.of(context).size.width,
+                      clipBehavior: Clip.hardEdge,
+                      decoration: const BoxDecoration(),
+                      child: Row(
+                        children: [
+                          Padding(
+                            padding: const EdgeInsets.all(8.0),
+                            child: CircleAvatar(
+                              backgroundImage: NetworkImage(listUser[index].image),
+                              backgroundColor: listUser[index].gender.toLowerCase() == 'male' ? Colors.lightBlue.shade100 : Colors.pink.shade100,
+                              radius: 48,
+                            ),
+                          ),
+                          Expanded(
+                            child: Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                Padding(
+                                  padding: const EdgeInsets.symmetric(vertical: 4.0),
+                                  child: Text("@${listUser[index].username}",style: const TextStyle(fontSize: 18, fontWeight: FontWeight.bold)),
+                                ),
+
+                                Padding(
+                                  padding: const EdgeInsets.symmetric(vertical: 4.0),
+                                  child: Text("${listUser[index].firstName} ${listUser[index].lastName}", style: const TextStyle(fontSize: 16),),
+                                ),
+                                Row(
+                                  children: [
+                                    const Icon(Icons.cake, color: Colors.pinkAccent, size: 14,),
+                                    Text(listUser[index].birthDate, style: const TextStyle(fontSize: 14, color: Colors.black54)),
+                                  ],
+                                ),
+                                Row(
+                                  children: [
+                                    const Icon(Icons.phone, color: Colors.green, size: 14,),
+                                    Text(listUser[index].phone, style: const TextStyle(fontSize: 14, color: Colors.black54)),
+                                  ],
+                                ),
+                                Row(
+                                  children: [
+                                    const Icon(Icons.mail, color: Colors.amber, size: 14,),
+                                    Text(listUser[index].email, style: const TextStyle(fontSize: 14, color: Colors.black54)),
+                                  ],
+                                ),
+                                Row(
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  children: [
+                                    const Icon(Icons.location_on, color: Colors.blue, size: 14,),
+                                    Expanded(child: Text(listUser[index].address.toString(), style: const TextStyle(fontSize: 14, color: Colors.black54))),
+                                  ],
+                                ),
+                              ],
+                            ),
+                          ),
+                        ],
+                      ),
                     );
                   }
               );
