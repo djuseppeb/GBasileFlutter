@@ -9,12 +9,12 @@ part 'address.g.dart';
 )
 class Address{
   final String address;
-  final String city;
+  final String? city;
   final Coordinates coordinates;
   final String postalCode;
   final String state;
 
-  const Address({required this.address, required this.city, required this.coordinates, required this.postalCode, required this.state});
+  const Address({required this.address, this.city, required this.coordinates, required this.postalCode, required this.state});
 
   factory Address.fromJson(Map<String, dynamic> json) => _$AddressFromJson(json);
 

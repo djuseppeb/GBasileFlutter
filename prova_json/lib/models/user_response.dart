@@ -10,10 +10,10 @@ class UserResponse{
   final int limit;
   final dynamic skip;
   final int total;
-  final List<User> user;
+  final List<User> users;
 
 
-  const UserResponse({required this.limit, required this.skip, required this.total, required this.user});
+  const UserResponse({required this.limit, required this.skip, required this.total, required this.users});
 
   factory UserResponse.fromJson(Map<String, dynamic> json) => _$UserResponseFromJson(json);
 

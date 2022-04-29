@@ -16,13 +16,13 @@ class Home extends StatelessWidget {
         builder: (context, snapshot){
           if(snapshot.hasData && snapshot.data is UserResponse){
             //risposta ottenuta, ho ciò che mi serve ed è del tipo che mi serve
-            final listUser = (snapshot.data as UserResponse).user;
+            final listUser = (snapshot.data as UserResponse).users;
 
             return ListView.builder(
                 itemCount: listUser.length,
                 itemBuilder: (context, index){
                   return ListTile(
-                    title: Text(listUser[index].eyeColor),
+                    title: Text("${listUser[index].firstName} ${listUser[index].lastName}"),
                   );
                 }
             );

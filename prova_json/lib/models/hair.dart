@@ -5,9 +5,9 @@ part 'hair.g.dart';
 @JsonSerializable()
 class Hair{
   final String color;
-  final String hair;
+  final String type;
 
-  const Hair({required this.color, required this.hair});
+  const Hair({required this.color, required this.type});
 
   factory Hair.fromJson(Map<String, dynamic> json) => _$HairFromJson(json);
 
