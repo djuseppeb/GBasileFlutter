@@ -6,7 +6,7 @@ import 'package:travel/components/favorite_button.dart';
 import 'package:travel/components/search_card.dart';
 import 'package:travel/components/top_bar.dart';
 
-import '../models/meta_turistica.dart';
+import 'package:travel/models/meta_turistica.dart';
 
 class Favorites extends StatefulWidget {
   const Favorites({Key? key,}) : super(key: key);

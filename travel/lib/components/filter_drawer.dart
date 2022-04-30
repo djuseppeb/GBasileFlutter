@@ -99,7 +99,7 @@ class _FilterDrawerState extends State<FilterDrawer> {
                                 ),
                               ),
                             ),
-                            const Text("1000\$"),
+                            const Text("1000\$+"),
                           ],
                         ),
 
@@ -161,7 +161,7 @@ class _FilterDrawerState extends State<FilterDrawer> {
                                     _recommended = null;
                                     _selectedCountry = null;
                                     _selectedRating = const RangeValues(1, 5);
-                                    _selectedPrice = const RangeValues(0, 2000);
+                                    _selectedPrice = const RangeValues(0, 1000);
                                   });
                                 },
                                 child: const Text("Reset")
@@ -175,8 +175,8 @@ class _FilterDrawerState extends State<FilterDrawer> {
                                     minPrice: _selectedPrice.start.toInt(),
                                     maxPrice: _selectedPrice.end.toInt(),
                                     country: _selectedCountry,
-                                    available: _available == false ? null: _available,
-                                    recommended : _recommended == false ? null: _recommended,
+                                    available: _available == false ? null : _available,
+                                    recommended : _recommended == false ? null : _recommended,
                                   );
                                   Navigator.of(context).pop();
                                 },

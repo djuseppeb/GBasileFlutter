@@ -30,18 +30,18 @@ class _GlobalSearchState extends State<GlobalSearch> {
   @override
   void initState() {
     super.initState();
-
+    //Valori di default per i filtri attualmente applicati
     _minRating = 1;
     _maxRating = 5;
-
     _minPrice = 0;
     _maxPrice = 1000;
-
     _risultatiRicerca = MetaTuristica.listaMete;
     _scaffoldkey = GlobalKey();
 
+    //Apre il drawer con i filtri automaticamente se si preme il pulsante nella home page
     SchedulerBinding.instance?.addPostFrameCallback((timeStamp) {
       final modalArgs = ModalRoute.of(context)?.settings.arguments ?? {};
+
       if(modalArgs is List
           && modalArgs.isNotEmpty
           && modalArgs[0] is Map<String, dynamic>
@@ -49,8 +49,60 @@ class _GlobalSearchState extends State<GlobalSearch> {
         _scaffoldkey.currentState?.openEndDrawer();
       }
     });
+
   }
 
+  //Imposto i valori dei filtri dal drawer poi filtro la lista con la funzione _filtramete
+
+  void _setAdditionalFilters({
+    int minRating = 1,
+    int maxRating = 5,
+    int minPrice = 0,
+    int maxPrice = 2000,
+    String? country,
+    bool? available,
+    bool? recommended
+  }){
+    _minRating = minRating;
+    _maxRating = maxRating;
+    _country = country;
+    _available = available;
+    _recommended = recommended;
+    _minPrice = minPrice;
+    _maxPrice = maxPrice;
+    
+    _filtraMete(_parolaRicerca ?? '');
+  }
+
+  bool _additionalFiltersFor(MetaTuristica meta){
+    return meta.rating >= _minRating && meta.rating <= _maxRating
+        && meta.minPrice >= _minPrice && meta.minPrice <= _maxPrice
+        && (_country == null || meta.country == _country )
+        && (_available == null || _available == false || meta.available == _available)
+        && (_recommended == null || _recommended == false || meta.recommended == _recommended);
+  }
+
+  void _filtraMete(String parolaRicerca){
+    //setta la variabile di stato basandosi sul parametro scritto nella barra di ricerca
+    _parolaRicerca = parolaRicerca;
+    if(parolaRicerca == ''){
+      setState(() {
+        //se non filtro per parola, applico soltanto i filtri del drawer
+        //genero una lista dove gli elementi sono elmenti della listaMete che rispettano i filtri inseriti
+        _risultatiRicerca = MetaTuristica.listaMete.where((meta) {
+          return _additionalFiltersFor(meta);
+        }).toList();
+      });
+    } else {
+      setState(() {
+        _risultatiRicerca = MetaTuristica.listaMete.where((meta) {
+            return (meta.city.toLowerCase().contains(parolaRicerca.toLowerCase()) && _additionalFiltersFor(meta));
+      }).toList();
+      });
+    }
+  }
+
+/*
   void _additionalFilters({
     int minRating = 1,
     int maxRating = 5,
@@ -95,7 +147,7 @@ class _GlobalSearchState extends State<GlobalSearch> {
             .toList();
       });
     }
-  }
+  }*/
 
   @override
   Widget build(BuildContext context) {
@@ -105,7 +157,7 @@ class _GlobalSearchState extends State<GlobalSearch> {
           selectedRating: RangeValues(
               _minRating.toDouble(), _maxRating.toDouble()
           ),
-        setFilters: _additionalFilters,
+        setFilters: _setAdditionalFilters,
         selectedCountry: _country,
         available: _available,
         selectedPrice: RangeValues(_minPrice.toDouble(), _maxPrice.toDouble()),
