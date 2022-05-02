@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:travel/Pages/favorites.dart';
+import 'package:streaming_shared_preferences/streaming_shared_preferences.dart';
 import 'package:travel/components/favorite_button.dart';
 import 'package:travel/components/carousel_title.dart';
 import 'package:travel/components/place_main_card.dart';
@@ -14,6 +14,10 @@ class DetailsPage extends StatefulWidget {
 }
 
 class _DetailsPageState extends State<DetailsPage> {
+  bool isFave = false;
+
+
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(

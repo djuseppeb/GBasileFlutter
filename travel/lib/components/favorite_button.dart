@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:shared_preferences/shared_preferences.dart';
+import 'package:streaming_shared_preferences/streaming_shared_preferences.dart';
 import 'package:travel/models/meta_turistica.dart';
 
 class FavoriteButton extends StatefulWidget {
@@ -13,26 +13,35 @@ class FavoriteButton extends StatefulWidget {
 
 class _FavoriteButtonState extends State<FavoriteButton> {
   List<String> _preferiti = [];
+  bool isFave = false;
 
-  void initFavorite() async{
-    SharedPreferences sp = await SharedPreferences.getInstance();
+  initSP() async{
+    final sp = await StreamingSharedPreferences.instance;
+    final favorites = sp.getStringList("preferiti", defaultValue: []).getValue();
     setState(() {
-      _preferiti = sp.getStringList('preferiti') ?? [];
+      isFave = favorites.contains(widget.meta.city);
     });
   }
 
-  void toggleFavorite(String id) async{
+  changeSP() async{
+    final sp = await StreamingSharedPreferences.instance;
+    var favorites = sp.getStringList("preferiti", defaultValue: []).getValue();
+    if(isFave){
+      favorites.remove(widget.meta.city);
+    } else {
+      favorites.add(widget.meta.city);
+    }
+    sp.setStringList("preferiti", favorites);
+
     setState(() {
-      _preferiti.contains(id) ? _preferiti.remove(id) : _preferiti.add(id);
+      isFave = !isFave;
     });
-    SharedPreferences sp = await SharedPreferences.getInstance();
-    sp.setStringList('preferiti', _preferiti);
   }
 
   @override
-  void initState() {
-    initFavorite();
+  void initState(){
     super.initState();
+    initSP();
   }
 
   @override
@@ -42,10 +51,8 @@ class _FavoriteButtonState extends State<FavoriteButton> {
           color: Colors.white,
           borderRadius: BorderRadius.circular(12)),
       child: IconButton(
-          onPressed: () async {
-            toggleFavorite(widget.meta.city);
-          },
-          icon: _preferiti.contains(widget.meta.city) ? const Icon(Icons.bookmark, color: Colors.amber) : const Icon(Icons.bookmark_outline, color: Colors.black),
+          onPressed: changeSP,
+          icon: isFave ? const Icon(Icons.bookmark, color: Colors.amber) : const Icon(Icons.bookmark_outline, color: Colors.black),
       ),
     );
   }
