@@ -1,9 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/scheduler.dart';
+import 'package:travel/components/app_drawer.dart';
 import 'package:travel/components/filter_drawer.dart';
 import 'package:travel/components/search_bar.dart';
 import 'package:travel/components/search_card.dart';
 import 'package:travel/components/top_bar.dart';
+import 'package:travel/models/interessi.dart';
 import 'package:travel/models/meta_turistica.dart';
 
 class GlobalSearch extends StatefulWidget {
@@ -18,6 +20,7 @@ class _GlobalSearchState extends State<GlobalSearch> {
   late bool endDrawerOpen;
   late final GlobalKey<ScaffoldState> _scaffoldkey;
 
+  //Filtri attualmente applicati
   String? _parolaRicerca;
   late int _minRating;
   late int _maxRating;
@@ -26,6 +29,7 @@ class _GlobalSearchState extends State<GlobalSearch> {
   String? _country;
   bool? _available;
   bool? _recommended;
+  late List<Interessi> _interessi;
 
   @override
   void initState() {
@@ -35,6 +39,7 @@ class _GlobalSearchState extends State<GlobalSearch> {
     _maxRating = 5;
     _minPrice = 0;
     _maxPrice = 1000;
+    _interessi = [];
     _risultatiRicerca = MetaTuristica.listaMete;
     _scaffoldkey = GlobalKey();
 
@@ -61,7 +66,8 @@ class _GlobalSearchState extends State<GlobalSearch> {
     int maxPrice = 2000,
     String? country,
     bool? available,
-    bool? recommended
+    bool? recommended,
+    List<Interessi> interessi = const []
   }){
     _minRating = minRating;
     _maxRating = maxRating;
@@ -70,6 +76,7 @@ class _GlobalSearchState extends State<GlobalSearch> {
     _recommended = recommended;
     _minPrice = minPrice;
     _maxPrice = maxPrice;
+    _interessi = interessi;
     
     _filtraMete(_parolaRicerca ?? '');
   }
@@ -79,7 +86,8 @@ class _GlobalSearchState extends State<GlobalSearch> {
         && meta.minPrice >= _minPrice && meta.minPrice <= _maxPrice
         && (_country == null || meta.country == _country )
         && (_available == null || _available == false || meta.available == _available)
-        && (_recommended == null || _recommended == false || meta.recommended == _recommended);
+        && (_recommended == null || _recommended == false || meta.recommended == _recommended)
+        && (_interessi.isEmpty || (meta.interessi?.any((interesse) => _interessi.contains(interesse)) ?? false));
   }
 
   void _filtraMete(String parolaRicerca){
@@ -94,6 +102,7 @@ class _GlobalSearchState extends State<GlobalSearch> {
         }).toList();
       });
     } else {
+      //applico sia i filtri che la ricerca per parola
       setState(() {
         _risultatiRicerca = MetaTuristica.listaMete.where((meta) {
             return (meta.city.toLowerCase().contains(parolaRicerca.toLowerCase()) && _additionalFiltersFor(meta));
@@ -101,53 +110,6 @@ class _GlobalSearchState extends State<GlobalSearch> {
       });
     }
   }
-
-/*
-  void _additionalFilters({
-    int minRating = 1,
-    int maxRating = 5,
-    int minPrice = 0,
-    int maxPrice = 2000,
-    String? country,
-    bool? available,
-    bool? recommended
-}){
-    setState(() {
-      _minRating = minRating;
-      _maxRating = maxRating;
-      _country = country;
-      _available = available;
-      _recommended = recommended;
-      _minPrice = minPrice;
-      _maxPrice = maxPrice;
-
-      _filtraMete(_parolaRicerca ?? '');
-
-      _risultatiRicerca = _risultatiRicerca.where((risultato){
-        return
-          risultato.rating >= minRating && risultato.rating <= maxRating
-              && (country == null || risultato.country == country)
-              && (available == null || risultato.available == available)
-              && risultato.minPrice >= minPrice && risultato.minPrice <= maxPrice
-              && (recommended == null || risultato.recommended == recommended);
-      }).toList();
-    });
-  }
-
-  _filtraMete(String parolaRicerca) {
-    if (parolaRicerca.isEmpty) {
-      setState(() {
-        _risultatiRicerca = MetaTuristica.listaMete;
-      });
-    } else {
-      setState(() {
-        _risultatiRicerca = MetaTuristica.listaMete
-            .where((meta) =>
-                meta.city.toLowerCase().contains(parolaRicerca.toLowerCase()))
-            .toList();
-      });
-    }
-  }*/
 
   @override
   Widget build(BuildContext context) {
@@ -162,8 +124,10 @@ class _GlobalSearchState extends State<GlobalSearch> {
         available: _available,
         selectedPrice: RangeValues(_minPrice.toDouble(), _maxPrice.toDouble()),
         recommended: _recommended,
+        interessi: _interessi,
       ),
       appBar: const TopBar(),
+      drawer: const AppDrawer(),
       body: Padding(
         padding: const EdgeInsets.symmetric(vertical: 8.0, horizontal: 24),
         child: Column(

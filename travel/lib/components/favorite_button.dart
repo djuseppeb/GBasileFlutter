@@ -4,7 +4,8 @@ import 'package:travel/models/meta_turistica.dart';
 
 class FavoriteButton extends StatefulWidget {
   final MetaTuristica meta;
-  const FavoriteButton(this.meta, {Key? key}) : super(key: key);
+  final Function? callback;
+  const FavoriteButton(this.meta, {Key? key, this.callback}) : super(key: key);
 
   @override
   _FavoriteButtonState createState() => _FavoriteButtonState();

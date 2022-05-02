@@ -55,7 +55,7 @@ class _FavoritesState extends State<Favorites> {
                   return Row(
                     children: [
                       SearchCard(_listaPreferiti[index]),
-                      FavoriteButton(_listaPreferiti[index])
+                      FavoriteButton(_listaPreferiti[index], callback: initFavoriteList,)
                     ],
                   );
                   },

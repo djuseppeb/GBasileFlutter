@@ -3,7 +3,9 @@ import 'package:travel/models/interessi.dart';
 import 'package:travel/components/category_item.dart';
 
 class CategoryList extends StatelessWidget {
-  const CategoryList({Key? key}) : super(key: key);
+  final List<Interessi> interessiSelezionati;
+  final Function(Interessi?) callback;
+  const CategoryList(this.interessiSelezionati, this.callback, {Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -13,12 +15,6 @@ class CategoryList extends StatelessWidget {
         const Text("Category", style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold),),
         SizedBox(
           height: 100,
-          /*child: ListView(
-              scrollDirection: Axis.horizontal,
-              children: [CategoryItem(categoryName: "all", categoryIcon: Icons.grid_view_rounded, categoryColor: Colors.blue.shade700)] + Interessi.values.map(
-                      (interesse) => CategoryItem(categoryName: interesse.name, categoryIcon: interesse.icon, categoryColor: interesse.color)
-              ).toList()
-          ),*/
           child: ListView.builder(
             scrollDirection: Axis.horizontal,
             itemCount: Interessi.values.length,
@@ -27,26 +23,30 @@ class CategoryList extends StatelessWidget {
                 return Row(
                   children: [
                     CategoryItem(
+                        null,
+                        interessiSelezionati.isEmpty,
+                        callback,
                         categoryName: "all",
                         categoryIcon: Icons.grid_view_rounded,
                         categoryColor: Colors.blueAccent.shade700),
                     CategoryItem(
-                        categoryName: Interessi.values[index].name,
-                        categoryIcon: Interessi.values[index].icon,
-                        categoryColor: Interessi.values[index].color)
+                      Interessi.values[index],
+                      interessiSelezionati.contains(Interessi.values[index]),
+                      callback,
+                    )
                   ],
                 );
               }
               if (index == Interessi.values.length-1) {
                 return CategoryItem(
-                    categoryName: Interessi.values[index].name,
-                    categoryIcon: Interessi.values[index].icon,
-                    categoryColor: Interessi.values[index].color);
+                  Interessi.values[index],
+                  interessiSelezionati.contains(Interessi.values[index]),
+                  callback,);
               } else {
                 return CategoryItem(
-                  categoryName: Interessi.values[index].name,
-                  categoryIcon: Interessi.values[index].icon,
-                  categoryColor: Interessi.values[index].color,
+                  Interessi.values[index],
+                  interessiSelezionati.contains(Interessi.values[index]),
+                  callback,
                   hasPadding: false,
                 );
               }

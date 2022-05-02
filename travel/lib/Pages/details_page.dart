@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:travel/Pages/favorites.dart';
 import 'package:travel/components/favorite_button.dart';
 import 'package:travel/components/carousel_title.dart';
 import 'package:travel/components/place_main_card.dart';
@@ -42,7 +43,7 @@ class _DetailsPageState extends State<DetailsPage> {
                           color: Colors.black,
                         )),
                   ),
-                  FavoriteButton(widget.meta),
+                  FavoriteButton(widget.meta,),
                 ],
               ),
             ),

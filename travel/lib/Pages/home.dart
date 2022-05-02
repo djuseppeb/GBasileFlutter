@@ -20,7 +20,7 @@ class Home extends StatelessWidget {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: const [
-              CategoryList(),
+              //CategoryList(),
               SearchBar(isHomePage: true),
               PopularList(),
               SizedBox(height: 24),
