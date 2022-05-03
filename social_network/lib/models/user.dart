@@ -6,22 +6,22 @@ part 'user.g.dart';
 
 @JsonSerializable(explicitToJson: true)
 class User {
-  final String id;
+  final String? id;
   final String? title;
-  final String firstName;
-  final String lastName;
+  final String? firstName;
+  final String? lastName;
   final String? gender;
-  final String email;
+  final String? email;
   final String? dateOfBirth;
   final String? phone;
   final String? url;
   final Location? location;
 
   const User({
-    required this.id,
-    required this.firstName,
-    required this.lastName,
-    required this.email,
+    this.id,
+    this.firstName,
+    this.lastName,
+    this.email,
     this.title,
     this.gender,
     this.dateOfBirth,
