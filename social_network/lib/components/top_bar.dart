@@ -16,7 +16,7 @@ class TopBar extends StatelessWidget with PreferredSizeWidget{
       centerTitle: true,
       backgroundColor: Colors.transparent,
       elevation: 0,
-      actions: [
+      /*actions: [
         IconButton(
           onPressed: () async {
             SharedPreferences sp = await SharedPreferences.getInstance();
@@ -28,7 +28,7 @@ class TopBar extends StatelessWidget with PreferredSizeWidget{
           icon: const Icon(Icons.logout),
           color: Colors.black,
         )
-      ],
+      ],*/
     );
   }
 }

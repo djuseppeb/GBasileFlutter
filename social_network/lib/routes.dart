@@ -9,6 +9,5 @@ generateRoutes(){
     '/' : (context) => const Center(child: Loading()),
     '/login' : (context) => const Center(child: Login()),
     '/home' : (context) => const Center(child: Home()),
-    '/profile' : (context) => const Center(child: Profile()),
   };
 }

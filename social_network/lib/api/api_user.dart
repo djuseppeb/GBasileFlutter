@@ -21,7 +21,7 @@ class ApiUser{
 
   //ritorna l'utente con l'id specificato
   static Future<User> getUserById(String id) async{
-    final response = await http.get(Uri.parse("$baseUrl/user/:$id"), headers: {'app-id': '626fc935e000f620bdf05f17'});
+    final response = await http.get(Uri.parse("$baseUrl/user/$id"), headers: {'app-id': '626fc935e000f620bdf05f17'});
 
     if (response.statusCode == 200){
       return User.fromJson(jsonDecode(response.body));

@@ -87,7 +87,7 @@ class _HomeState extends State<Home> {
             }
             if (snapshot.hasError){
               return Center(
-                  child: Text("Errore nel caricamento: ${snapshot.error}", style: TextStyle(fontSize: 30),)
+                  child: Text("Errore nel caricamento: ${snapshot.error}", style: TextStyle(fontSize: 24),)
               );
             }
 

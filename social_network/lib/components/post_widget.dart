@@ -3,6 +3,7 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:intl/intl.dart';
 
 import '../models/post.dart';
+import '../pages/profile.dart';
 
 class PostWidget extends StatelessWidget {
   final Post postData;
@@ -19,22 +20,25 @@ class PostWidget extends StatelessWidget {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               //User data
-              Row(
-                children: [
-                  CircleAvatar(
-                    radius: 24,
-                    backgroundImage: NetworkImage(postData.owner.picture ?? "https://via.placeholder.com/150"),
-                  ),
-                  const SizedBox(width: 16),
-                  Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
-                    Text("${postData.owner.firstName} ${postData.owner.lastName}",
-                        style: GoogleFonts.ubuntu(
-                            fontSize: 16, color: Colors.black, fontWeight: FontWeight.bold)),
-                    if (postData.publishDate != null)
-                      Text(DateFormat.yMMMMd('it_IT').add_Hm().format(DateTime.parse(postData.publishDate!)),
-                        style: GoogleFonts.ubuntu(fontSize: 16, color: Colors.black54)),
-                  ])
-                ],
+              GestureDetector(
+                onTap: () => Navigator.push(context, MaterialPageRoute(builder: (context) => Profile(postData.owner.id!))),
+                child: Row(
+                  children: [
+                    CircleAvatar(
+                      radius: 24,
+                      backgroundImage: NetworkImage(postData.owner.picture ?? "https://via.placeholder.com/150"),
+                    ),
+                    const SizedBox(width: 16),
+                    Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
+                      Text("${postData.owner.firstName} ${postData.owner.lastName}",
+                          style: GoogleFonts.ubuntu(
+                              fontSize: 16, color: Colors.black, fontWeight: FontWeight.bold)),
+                      if (postData.publishDate != null)
+                        Text(DateFormat.yMMMMd('it_IT').add_Hm().format(DateTime.parse(postData.publishDate!)),
+                          style: GoogleFonts.ubuntu(fontSize: 16, color: Colors.black54)),
+                    ])
+                  ],
+                ),
               ),
               //Post data
               //Didascalia
