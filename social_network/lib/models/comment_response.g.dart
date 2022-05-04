@@ -13,7 +13,7 @@ CommentResponse _$CommentResponseFromJson(Map<String, dynamic> json) =>
           .toList(),
       total: json['total'] as int,
       page: json['page'] as int,
-      number: json['number'] as int,
+      limit: json['limit'] as int,
     );
 
 Map<String, dynamic> _$CommentResponseToJson(CommentResponse instance) =>
@@ -21,5 +21,5 @@ Map<String, dynamic> _$CommentResponseToJson(CommentResponse instance) =>
       'data': instance.data.map((e) => e.toJson()).toList(),
       'total': instance.total,
       'page': instance.page,
-      'number': instance.number,
+      'limit': instance.limit,
     };

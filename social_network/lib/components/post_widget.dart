@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:intl/intl.dart';
 
 import '../models/post.dart';
 
@@ -22,39 +23,44 @@ class PostWidget extends StatelessWidget {
                 children: [
                   CircleAvatar(
                     radius: 24,
-                    backgroundImage: NetworkImage("${postData.owner.url}"),
+                    backgroundImage: NetworkImage(postData.owner.picture ?? "https://via.placeholder.com/150"),
                   ),
                   const SizedBox(width: 16),
                   Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
                     Text("${postData.owner.firstName} ${postData.owner.lastName}",
                         style: GoogleFonts.ubuntu(
                             fontSize: 16, color: Colors.black, fontWeight: FontWeight.bold)),
-                    Text(postData.publishDate,
-                        style: GoogleFonts.ubuntu(
-                            fontSize: 16, color: Colors.black54)),
+                    if (postData.publishDate != null)
+                      Text(DateFormat.yMMMMd('it_IT').add_Hm().format(DateTime.parse(postData.publishDate!)),
+                        style: GoogleFonts.ubuntu(fontSize: 16, color: Colors.black54)),
                   ])
                 ],
               ),
               //Post data
-              Padding(
-                padding: const EdgeInsets.symmetric(vertical: 8),
-                child: Text((postData.text), style: GoogleFonts.ubuntu(fontSize: 16, color: Colors.black)),
-              ),
-              Padding(
-                padding: const EdgeInsets.symmetric(vertical: 8.0),
-                child: Image.network(postData.image),
-              ),
-              Padding(
-                padding: const EdgeInsets.symmetric(vertical: 8),
-                child: Wrap(
-                  spacing: 6,
-                  children: [
-                    Chip(label: Text("animal")),
-                    Chip(label: Text("dog")),
-                    Chip(label: Text("labrador retriever")),
-                  ],
+              //Didascalia
+              if(postData.text != null)
+                Padding(
+                  padding: const EdgeInsets.symmetric(vertical: 8),
+                  child: Text((postData.text!), style: GoogleFonts.ubuntu(fontSize: 16, color: Colors.black)),
                 ),
-              ),
+
+              //Immagine
+              if(postData.image != null)
+                Padding(
+                  padding: const EdgeInsets.symmetric(vertical: 8.0),
+                  child: Image.network(postData.image!),
+                ),
+
+              //Lista dei tag
+              if (postData.tags != null)
+                Padding(
+                  padding: const EdgeInsets.symmetric(vertical: 8),
+                  child: Wrap(
+                    spacing: 6,
+                    children:postData.tags!.map((tag) => Chip(label: Text(tag))).toList(),
+                  ),
+                ),
+
               const Divider(thickness: 2,),
               //Likes and comments
               Row(
@@ -63,7 +69,7 @@ class PostWidget extends StatelessWidget {
                   Row(
                     children: [
                       Icon(Icons.thumb_up_rounded),
-                      Text("${postData.likes}", style: GoogleFonts.ubuntu(fontSize: 16, color: Colors.black))
+                      Text("${postData.likes ?? 0}", style: GoogleFonts.ubuntu(fontSize: 16, color: Colors.black))
                     ],
                   ),
                   SizedBox(width: 32),

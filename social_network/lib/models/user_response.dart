@@ -8,13 +8,13 @@ class UserResponse {
   final List<User> data;
   final int total;
   final int page;
-  final int number;
+  final int limit;
 
   const UserResponse({
     required this.data,
     required this.total,
     required this.page,
-    required this.number,
+    required this.limit,
   });
 
   factory UserResponse.fromJson(Map<String, dynamic> json) => _$UserResponseFromJson(json);

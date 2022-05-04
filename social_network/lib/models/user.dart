@@ -14,7 +14,7 @@ class User {
   final String? email;
   final String? dateOfBirth;
   final String? phone;
-  final String? url;
+  final String? picture;
   final Location? location;
 
   const User({
@@ -26,7 +26,7 @@ class User {
     this.gender,
     this.dateOfBirth,
     this.phone,
-    this.url,
+    this.picture,
     this.location,
   });
 

@@ -14,7 +14,6 @@ class ApiPost{
     final response = await http.get(Uri.parse("$baseUrl/post/?page=$page&limit=$limit"), headers: {'app-id': '626fc935e000f620bdf05f17'});
 
     if (response.statusCode == 200){
-      print(response.body);
       return PostResponse.fromJson(jsonDecode(response.body));
     }
     throw Exception("Errore nel ricevere i post ${response.body}");

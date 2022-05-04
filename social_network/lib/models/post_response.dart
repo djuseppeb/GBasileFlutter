@@ -8,13 +8,13 @@ class PostResponse {
   final List<Post> data;
   final int total;
   final int page;
-  final int number;
+  final int limit;
 
   const PostResponse({
     required this.data,
     required this.total,
     required this.page,
-    required this.number,
+    required this.limit,
   });
 
   factory PostResponse.fromJson(Map<String, dynamic> json) =>

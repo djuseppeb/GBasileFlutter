@@ -12,7 +12,7 @@ UserResponse _$UserResponseFromJson(Map<String, dynamic> json) => UserResponse(
           .toList(),
       total: json['total'] as int,
       page: json['page'] as int,
-      number: json['number'] as int,
+      limit: json['limit'] as int,
     );
 
 Map<String, dynamic> _$UserResponseToJson(UserResponse instance) =>
@@ -20,5 +20,5 @@ Map<String, dynamic> _$UserResponseToJson(UserResponse instance) =>
       'data': instance.data.map((e) => e.toJson()).toList(),
       'total': instance.total,
       'page': instance.page,
-      'number': instance.number,
+      'limit': instance.limit,
     };

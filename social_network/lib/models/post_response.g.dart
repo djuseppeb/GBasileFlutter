@@ -12,7 +12,7 @@ PostResponse _$PostResponseFromJson(Map<String, dynamic> json) => PostResponse(
           .toList(),
       total: json['total'] as int,
       page: json['page'] as int,
-      number: json['number'] as int,
+      limit: json['limit'] as int,
     );
 
 Map<String, dynamic> _$PostResponseToJson(PostResponse instance) =>
@@ -20,5 +20,5 @@ Map<String, dynamic> _$PostResponseToJson(PostResponse instance) =>
       'data': instance.data.map((e) => e.toJson()).toList(),
       'total': instance.total,
       'page': instance.page,
-      'number': instance.number,
+      'limit': instance.limit,
     };
