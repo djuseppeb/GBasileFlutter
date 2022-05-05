@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:intl/intl.dart';
 import 'package:social_network/models/comment.dart';
 
 class CommentCard extends StatelessWidget {
@@ -26,7 +27,7 @@ class CommentCard extends StatelessWidget {
                   children: [
                     Text("${commentData.owner.firstName} ${commentData.owner.lastName}", style: GoogleFonts.ubuntu(fontSize: 16, color: Colors.black, fontWeight: FontWeight.bold)),
                     Text(commentData.message, style: GoogleFonts.ubuntu(fontSize: 16, color: Colors.black,)),
-                    Text(commentData.publishDate, style: GoogleFonts.ubuntu(fontSize: 14, color: Colors.black54,))
+                    Text(DateFormat.yMMMMd('it_IT').add_Hm().format(DateTime.parse(commentData.publishDate)), style: GoogleFonts.ubuntu(fontSize: 14, color: Colors.black54,))
                   ],
                 ),
               ),

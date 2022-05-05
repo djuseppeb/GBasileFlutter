@@ -73,12 +73,15 @@ class PostWidget extends StatelessWidget {
                 children: [
                   //Likes
                   Expanded(
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: [
-                        const Icon(Icons.thumb_up_rounded, color: Colors.black87),
-                        Text("${postData.likes ?? 0}", style: GoogleFonts.ubuntu(fontSize: 16, color: Colors.black))
-                      ],
+                    child: TextButton(
+                      onPressed: (){},
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          const Icon(Icons.thumb_up_rounded, color: Colors.black87),
+                          Text("${postData.likes ?? 0}", style: GoogleFonts.ubuntu(fontSize: 16, color: Colors.black))
+                        ],
+                      ),
                     ),
                   ),
                   //Comments
