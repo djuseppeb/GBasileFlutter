@@ -3,7 +3,8 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class TopBar extends StatelessWidget with PreferredSizeWidget{
-  const TopBar({Key? key}) : super(key: key);
+  final String title;
+  const TopBar({required this.title, Key? key}) : super(key: key);
 
   @override
   Size get preferredSize => const Size.fromHeight(48);
@@ -11,11 +12,11 @@ class TopBar extends StatelessWidget with PreferredSizeWidget{
   @override
   Widget build(BuildContext context) {
     return AppBar(
-      title: Text("DummySocial",
-          style: GoogleFonts.ubuntu(fontSize: 24, color: Colors.black)),
+      title: Text(title, style: GoogleFonts.ubuntu(fontSize: 24, color: Colors.black)),
       centerTitle: true,
       backgroundColor: Colors.transparent,
       elevation: 0,
+      iconTheme: IconThemeData(color: Colors.black54),
       /*actions: [
         IconButton(
           onPressed: () async {

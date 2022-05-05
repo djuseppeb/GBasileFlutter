@@ -68,7 +68,7 @@ class _ProfileState extends State<Profile> {
   Widget build(BuildContext context) {
 
     return Scaffold(
-      bottomNavigationBar: const BottomBar(),
+      bottomNavigationBar: const BottomBar(currentPage: "profile",),
       body: SafeArea(
         child: ListView(
           shrinkWrap: true,
@@ -102,7 +102,7 @@ class _ProfileState extends State<Profile> {
 
                   return ListView.builder(
                     shrinkWrap: true,
-                    physics: ClampingScrollPhysics(),
+                    physics: const ClampingScrollPhysics(),
                     // itemCount = lunghezza della lista con i dati dei post (+ 1 se ci sono altri post)
                     itemCount: _listPostVisualizzati.length + (_hasMorePost ? 1 : 0),
                     itemBuilder: (context, index) {

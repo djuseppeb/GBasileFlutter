@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:intl/intl.dart';
+import 'package:social_network/pages/post_comments.dart';
 
 import '../models/post.dart';
 import '../pages/profile.dart';
@@ -68,21 +69,32 @@ class PostWidget extends StatelessWidget {
               const Divider(thickness: 2,),
               //Likes and comments
               Row(
+                mainAxisAlignment: MainAxisAlignment.center,
                 children: [
                   //Likes
-                  Row(
-                    children: [
-                      Icon(Icons.thumb_up_rounded),
-                      Text("${postData.likes ?? 0}", style: GoogleFonts.ubuntu(fontSize: 16, color: Colors.black))
-                    ],
+                  Expanded(
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        const Icon(Icons.thumb_up_rounded, color: Colors.black87),
+                        Text("${postData.likes ?? 0}", style: GoogleFonts.ubuntu(fontSize: 16, color: Colors.black))
+                      ],
+                    ),
                   ),
-                  SizedBox(width: 32),
                   //Comments
-                  Row(
-                    children: [
-                      Icon(Icons.comment_rounded),
-                      Text("Commenti", style: GoogleFonts.ubuntu(fontSize: 16, color: Colors.black))
-                    ],
+                  Expanded(
+                    child: TextButton(
+                      onPressed: () {
+                        Navigator.push(context, MaterialPageRoute(builder: (context) => PostComments(postData.id!)));
+                      },
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          const Icon(Icons.comment_rounded, color: Colors.black87,),
+                          Text("Commenti", style: GoogleFonts.ubuntu(fontSize: 16, color: Colors.black))
+                        ],
+                      ),
+                    ),
                   )
                 ],
               )

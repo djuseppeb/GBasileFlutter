@@ -46,8 +46,8 @@ class _HomeState extends State<Home> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: const TopBar(),
-      bottomNavigationBar: const BottomBar(),
+      appBar: const TopBar(title: "DummySocial"),
+      bottomNavigationBar: BottomBar(currentPage: "home",),
       body: RefreshIndicator(
         onRefresh: () {
           setState(() {
@@ -87,7 +87,7 @@ class _HomeState extends State<Home> {
             }
             if (snapshot.hasError){
               return Center(
-                  child: Text("Errore nel caricamento: ${snapshot.error}", style: TextStyle(fontSize: 24),)
+                  child: Text("Errore nel caricamento: ${snapshot.error}", style: const TextStyle(fontSize: 24),)
               );
             }
 

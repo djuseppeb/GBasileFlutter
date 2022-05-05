@@ -3,7 +3,8 @@ import 'package:shared_preferences/shared_preferences.dart';
 import 'package:social_network/pages/profile.dart';
 
 class BottomBar extends StatelessWidget {
-  const BottomBar({Key? key}) : super(key: key);
+  final String currentPage;
+  const BottomBar({Key? key, required this.currentPage}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -13,29 +14,33 @@ class BottomBar extends StatelessWidget {
        children: [
          IconButton(
              onPressed: (){
-               Navigator.of(context).pushNamed("/home");
+               if (currentPage != "home") {
+                 Navigator.of(context).pushNamedAndRemoveUntil('/home', (Route<dynamic> route) => false);
+               }
              },
-             icon: Icon(Icons.home),
+             icon: Icon(Icons.home, color: (currentPage == "home") ? Colors.pinkAccent : Colors.black87),
          ),
          IconButton(
            onPressed: (){
-             Navigator.of(context).pushNamed("/home");
+             //Navigator.of(context).pushNamed("/home");
            },
-           icon: Icon(Icons.search),
+           icon: Icon(Icons.search, color: (currentPage == "search") ? Colors.pinkAccent : Colors.black87),
          ),
          IconButton(
            onPressed: (){
-             Navigator.of(context).pushNamed("/home");
+             //Navigator.of(context).pushNamed("/home");
            },
-           icon: Icon(Icons.people),
+           icon: Icon(Icons.people, color: (currentPage == "users") ? Colors.pinkAccent : Colors.black87),
          ),
          IconButton(
            onPressed: () async{
-             SharedPreferences sp = await SharedPreferences.getInstance();
-             var userId = sp.getString('user');
-             Navigator.push(context, MaterialPageRoute(builder: (context) => Profile(userId!)));
+             if (currentPage != "profile"){
+               SharedPreferences sp = await SharedPreferences.getInstance();
+               var userId = sp.getString('user');
+               Navigator.push(context, MaterialPageRoute(builder: (context) => Profile(userId!)));
+             }
            },
-           icon: Icon(Icons.face),
+           icon: Icon(Icons.face, color: (currentPage == "profile") ? Colors.pinkAccent : Colors.black87),
          )
        ],
      ),
