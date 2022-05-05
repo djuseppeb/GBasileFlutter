@@ -48,4 +48,60 @@ class ApiPost{
     }
     throw Exception("Errore nel ricevere i post ${response.body}");
   }
+
+  //Creazione di un post
+  static Future<Post> postCreatePost(Post post) async{
+    Map<String, dynamic> _jsonPost = post.toJson();
+    _jsonPost.removeWhere((key, value) => value == null);
+
+    final http.Response response = await http.post(
+        Uri.parse("$baseUrl/post/create"),
+        headers: {
+          'app-id': '626fc935e000f620bdf05f17',
+          'Content-type' : 'application/json'
+        },
+        body: jsonEncode({_jsonPost})
+    );
+
+    if(response.statusCode == 200){
+      return Post.fromJson(jsonDecode(response.body));
+    }
+    throw Exception("Pubblicazione fallita: ${response.body}");
+  }
+
+  //Modifica di un post
+  static Future<Post> updatePost(String id, Post postData) async{
+    Map<String, dynamic> _jsonPost = postData.toJson();
+    _jsonPost.removeWhere((key, value) => value == null);
+
+    final http.Response response = await http.put(
+        Uri.parse("$baseUrl/post/$id"),
+        headers: {
+          'app-id': '626fc935e000f620bdf05f17',
+          'Content-type' : 'application/json'
+        },
+        body: jsonEncode({_jsonPost})
+    );
+
+    if(response.statusCode == 200){
+      return Post.fromJson(jsonDecode(response.body));
+    }
+    throw Exception("Modifica fallita: ${response.body}");
+  }
+
+  //Cancellazione di un post
+  static Future<Post> deleteComment(String id) async{
+
+    final http.Response response = await http.delete(
+      Uri.parse("$baseUrl/post/$id"),
+      headers: {
+        'app-id': '626fc935e000f620bdf05f17',
+      },
+    );
+
+    if (response.statusCode == 200){
+      return Post.fromJson(jsonDecode(response.body));
+    }
+    throw Exception("Errore nell'eliminazione del post: ${response.body}");
+  }
 }

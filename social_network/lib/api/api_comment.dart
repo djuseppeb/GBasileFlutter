@@ -1,6 +1,8 @@
 import 'dart:convert';
 
 import 'package:http/http.dart' as http;
+import 'package:shared_preferences/shared_preferences.dart';
+import 'package:social_network/models/comment.dart';
 import 'package:social_network/models/comment_response.dart';
 
 class ApiComment{
@@ -35,5 +37,72 @@ class ApiComment{
       return CommentResponse.fromJson(jsonDecode(response.body));
     }
     throw Exception("Errore nel ricevere i commenti ${response.body}");
+  }
+
+  //Aggiunta di un commento
+  //Metodo 1
+  /*static Future<Comment> postCommentTo(String postId, String message) async{
+    SharedPreferences sp = await SharedPreferences.getInstance();
+    String? userId = sp.getString("user");
+
+    // Se l'utente non è loggato fermalo
+    if(userId == null){
+      throw Exception("Impossibile pubblicare un commento, effettuare il login");
+    }
+
+    final http.Response response = await http.post(
+      Uri.parse("$baseUrl/comment/create"),
+      headers: {
+        'app-id': '626fc935e000f620bdf05f17',
+        'Content-type' : 'application/json'
+      },
+      body: jsonEncode({
+          'owner' : userId,
+          'post' : postId,
+          'message' : message
+        })
+    );
+
+    if(response.statusCode == 200){
+      return Comment.fromJson(jsonDecode(response.body));
+    }
+    throw Exception("Commento non inserito: ${response.body}");
+  }*/
+
+  //Aggiunta di un commento
+  //Metodo 2
+  static Future<Comment> postCommentTo(Comment commento) async{
+    Map<String, dynamic> _jsonComment = commento.toJson();
+    _jsonComment.removeWhere((key, value) => value == null);
+
+    final http.Response response = await http.post(
+      Uri.parse("$baseUrl/comment/create"),
+      headers: {
+        'app-id': '626fc935e000f620bdf05f17',
+        'Content-type' : 'application/json'
+      },
+      body: jsonEncode({_jsonComment})
+    );
+
+    if(response.statusCode == 200){
+      return Comment.fromJson(jsonDecode(response.body));
+    }
+    throw Exception("Commento non inserito: ${response.body}");
+  }
+
+  //Eliminazione commento
+  static Future<Comment> deleteComment(String id) async{
+
+    final http.Response response = await http.delete(
+        Uri.parse("$baseUrl/comment/$id"),
+        headers: {
+          'app-id': '626fc935e000f620bdf05f17',
+        },
+    );
+
+    if (response.statusCode == 200){
+      return Comment.fromJson(jsonDecode(response.body));
+    }
+    throw Exception("Errore nell'eliminazione del commento: ${response.body}");
   }
 }

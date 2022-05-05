@@ -5,14 +5,14 @@ part 'comment.g.dart';
 
 @JsonSerializable(explicitToJson: true)
 class Comment {
-  final String id;
+  final String? id;
   final String message;
   final User owner;
   final String post;
   final String publishDate;
 
   const Comment({
-    required this.id,
+    this.id,
     required this.message,
     required this.owner,
     required this.post,

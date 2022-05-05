@@ -28,4 +28,44 @@ class ApiUser{
     }
     throw Exception("Errore nel ricevere informazioni dell'utente ${response.body}");
   }
+
+  //Creazione nuovo utente
+  static Future<User> postUser(User userData, String id) async{
+    Map<String, dynamic> _jsonComment = userData.toJson();
+    _jsonComment.removeWhere((key, value) => value == null);
+
+    final http.Response response = await http.post(
+        Uri.parse("$baseUrl/user/create"),
+        headers: {
+          'app-id': '626fc935e000f620bdf05f17',
+          'Content-type' : 'application/json'
+        },
+        body: jsonEncode({_jsonComment})
+    );
+
+    if(response.statusCode == 200){
+      return User.fromJson(jsonDecode(response.body));
+    }
+    throw Exception("Commento non inserito: ${response.body}");
+  }
+
+  //Modifica dati utente
+  static Future<User> updateUser(User userData, String id) async{
+    Map<String, dynamic> _jsonComment = userData.toJson();
+    _jsonComment.removeWhere((key, value) => value == null);
+
+    final http.Response response = await http.put(
+        Uri.parse("$baseUrl/user/$id"),
+        headers: {
+          'app-id': '626fc935e000f620bdf05f17',
+          'Content-type' : 'application/json'
+        },
+        body: jsonEncode({_jsonComment})
+    );
+
+    if(response.statusCode == 200){
+      return User.fromJson(jsonDecode(response.body));
+    }
+    throw Exception("Commento non inserito: ${response.body}");
+  }
 }
