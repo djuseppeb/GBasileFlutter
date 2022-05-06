@@ -50,7 +50,7 @@ class ApiPost{
   }
 
   //Creazione di un post
-  static Future<Post> postCreatePost(Post post) async{
+  static Future<Post> newPost(Post post) async{
     Map<String, dynamic> _jsonPost = post.toJson();
     _jsonPost.removeWhere((key, value) => value == null);
 
@@ -90,7 +90,7 @@ class ApiPost{
   }
 
   //Cancellazione di un post
-  static Future<Post> deleteComment(String id) async{
+  static Future<bool> deletePost(String id) async{
 
     final http.Response response = await http.delete(
       Uri.parse("$baseUrl/post/$id"),
@@ -100,7 +100,7 @@ class ApiPost{
     );
 
     if (response.statusCode == 200){
-      return Post.fromJson(jsonDecode(response.body));
+      return true;
     }
     throw Exception("Errore nell'eliminazione del post: ${response.body}");
   }

@@ -30,9 +30,9 @@ class ApiUser{
   }
 
   //Creazione nuovo utente
-  static Future<User> postUser(User userData, String id) async{
-    Map<String, dynamic> _jsonComment = userData.toJson();
-    _jsonComment.removeWhere((key, value) => value == null);
+  static Future<User> newUser(User userData) async{
+    Map<String, dynamic> _jsonUser = userData.toJson();
+    _jsonUser.removeWhere((key, value) => value == null);
 
     final http.Response response = await http.post(
         Uri.parse("$baseUrl/user/create"),
@@ -40,19 +40,19 @@ class ApiUser{
           'app-id': '626fc935e000f620bdf05f17',
           'Content-type' : 'application/json'
         },
-        body: jsonEncode({_jsonComment})
+        body: jsonEncode({_jsonUser})
     );
 
     if(response.statusCode == 200){
       return User.fromJson(jsonDecode(response.body));
     }
-    throw Exception("Commento non inserito: ${response.body}");
+    throw Exception("Non è stato possibile creare l'utente: ${response.body}");
   }
 
   //Modifica dati utente
   static Future<User> updateUser(User userData, String id) async{
-    Map<String, dynamic> _jsonComment = userData.toJson();
-    _jsonComment.removeWhere((key, value) => value == null);
+    Map<String, dynamic> _jsonUser = userData.toJson();
+    _jsonUser.removeWhere((key, value) => value == null);
 
     final http.Response response = await http.put(
         Uri.parse("$baseUrl/user/$id"),
@@ -60,12 +60,28 @@ class ApiUser{
           'app-id': '626fc935e000f620bdf05f17',
           'Content-type' : 'application/json'
         },
-        body: jsonEncode({_jsonComment})
+        body: jsonEncode({_jsonUser})
     );
 
     if(response.statusCode == 200){
       return User.fromJson(jsonDecode(response.body));
     }
-    throw Exception("Commento non inserito: ${response.body}");
+    throw Exception("Dati utente non modificati: ${response.body}");
+  }
+
+  //Eliminazione dati utente
+  static Future<bool> deleteUser(String id) async{
+
+    final http.Response response = await http.delete(
+      Uri.parse("$baseUrl/user/$id"),
+      headers: {
+        'app-id': '626fc935e000f620bdf05f17',
+      },
+    );
+
+    if (response.statusCode == 200){
+      return true;
+    }
+    throw Exception("Errore nell'eliminazione dell'utente: ${response.body}");
   }
 }

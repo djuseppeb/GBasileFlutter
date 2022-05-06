@@ -41,7 +41,7 @@ class ApiComment{
 
   //Aggiunta di un commento
   //Metodo 1
-  /*static Future<Comment> postCommentTo(String postId, String message) async{
+  static Future<Comment> newCommentFromString(String postId, String message) async{
     SharedPreferences sp = await SharedPreferences.getInstance();
     String? userId = sp.getString("user");
 
@@ -67,11 +67,10 @@ class ApiComment{
       return Comment.fromJson(jsonDecode(response.body));
     }
     throw Exception("Commento non inserito: ${response.body}");
-  }*/
+  }
 
   //Aggiunta di un commento
-  //Metodo 2
-  static Future<Comment> postCommentTo(Comment commento) async{
+  static Future<Comment> newCommentFromObject(Comment commento) async{
     Map<String, dynamic> _jsonComment = commento.toJson();
     _jsonComment.removeWhere((key, value) => value == null);
 
@@ -91,7 +90,7 @@ class ApiComment{
   }
 
   //Eliminazione commento
-  static Future<Comment> deleteComment(String id) async{
+  static Future<bool> deleteComment(String id) async{
 
     final http.Response response = await http.delete(
         Uri.parse("$baseUrl/comment/$id"),
@@ -101,7 +100,7 @@ class ApiComment{
     );
 
     if (response.statusCode == 200){
-      return Comment.fromJson(jsonDecode(response.body));
+      return true;
     }
     throw Exception("Errore nell'eliminazione del commento: ${response.body}");
   }

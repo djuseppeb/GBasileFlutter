@@ -16,7 +16,10 @@ class PostComments extends StatefulWidget {
 }
 
 class _PostCommentsState extends State<PostComments> {
+  String? _message;
+  late TextEditingController _textEditingController;
   late List<Comment> _listComment;
+  late UniqueKey _key;
   late int _skip;
   late int _page;
   late bool _hasMoreComments;
@@ -35,19 +38,84 @@ class _PostCommentsState extends State<PostComments> {
 
   @override
   void initState() {
+    super.initState();
+    _key = UniqueKey();
     _listComment = [];
     _skip = 0;
     _page = 0;
     _hasMoreComments = false;
     _future = _fetchComments();
+    _textEditingController = TextEditingController();
 
-    super.initState();
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      key: _key,
       appBar: const TopBar(title: "Commenti",),
+      floatingActionButton : FloatingActionButton(
+        child: const Icon(Icons.add),
+        onPressed: () async{
+          bool popResult = await showModalBottomSheet(
+            isScrollControlled: true,
+            context: context,
+            builder: (context){
+              return Padding(
+                padding: EdgeInsets.only(
+                    top: 8,
+                    left: 8,
+                    right: 8,
+                    bottom: MediaQuery.of(context).viewInsets.bottom,
+                ),
+                child: Column(
+                  mainAxisSize: MainAxisSize.min,
+                  children: [
+                    TextField(
+                      autofocus: true,
+                      controller: _textEditingController,
+                      maxLines: 5,
+                      onChanged: (value){
+                        _message = _textEditingController.text;
+                      },
+                    ),
+                    
+                    Row(
+                      children: [
+                        TextButton(
+                            onPressed: (){
+                              _message = null;
+                              _textEditingController.clear();
+                              Navigator.of(context).pop();
+                            },
+                            child: Text("Annulla")
+                        ),
+                        TextButton(
+                            onPressed: () async{
+                              if(_message == null || _message!.isEmpty){
+                                Navigator.of(context).pop();
+                              }
+                              await ApiComment.newCommentFromString(widget.postId, _message!);
+                              _message = null;
+                              _textEditingController.clear();
+                              Navigator.of(context).pop(true);
+                            },
+                            child: Text("Pubblica")
+                        )
+                      ],
+                    )
+                  ],
+                ),
+              );
+            }
+          );
+          if(popResult){
+            setState(() {
+              _key = UniqueKey();
+            });
+          }
+        },
+      ),
       body: SafeArea(
         child: FutureBuilder(
           future: _future,
