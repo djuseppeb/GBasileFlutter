@@ -19,7 +19,6 @@ class _PostCommentsState extends State<PostComments> {
   String? _message;
   late TextEditingController _textEditingController;
   late List<Comment> _listComment;
-  late UniqueKey _key;
   late int _skip;
   late int _page;
   late bool _hasMoreComments;
@@ -36,23 +35,24 @@ class _PostCommentsState extends State<PostComments> {
     return _listComment;
   }
 
-  @override
-  void initState() {
-    super.initState();
-    _key = UniqueKey();
+  void initVariables(){
     _listComment = [];
     _skip = 0;
     _page = 0;
     _hasMoreComments = false;
     _future = _fetchComments();
-    _textEditingController = TextEditingController();
+  }
 
+  @override
+  void initState() {
+    super.initState();
+    initVariables();
+    _textEditingController = TextEditingController();
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      key: _key,
       appBar: const TopBar(title: "Commenti",),
       floatingActionButton : FloatingActionButton(
         child: const Icon(Icons.add),
@@ -111,7 +111,7 @@ class _PostCommentsState extends State<PostComments> {
           );
           if(popResult){
             setState(() {
-              _key = UniqueKey();
+              initVariables();
             });
           }
         },
@@ -133,7 +133,6 @@ class _PostCommentsState extends State<PostComments> {
                 itemBuilder: (context, index){
 
                   if(index == _listCommentiVisualizzati.length){
-                    // chiamiamo di nuovo la funzione fetchPost per aggiungere un'altra pagina di post alla list
                     _future = _fetchComments();
                     // nel frattempo che carico, mostro un simbolo di attesa
                     return const Center(child: CircularProgressIndicator(),);

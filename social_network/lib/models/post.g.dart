@@ -14,7 +14,9 @@ Post _$PostFromJson(Map<String, dynamic> json) => Post(
       publishDate: json['publishDate'] as String?,
       id: json['id'] as String?,
       text: json['text'] as String?,
-      owner: User.fromJson(json['owner'] as Map<String, dynamic>),
+      owner: json['owner'] == null
+          ? null
+          : User.fromJson(json['owner'] as Map<String, dynamic>),
     );
 
 Map<String, dynamic> _$PostToJson(Post instance) => <String, dynamic>{
@@ -25,5 +27,5 @@ Map<String, dynamic> _$PostToJson(Post instance) => <String, dynamic>{
       'link': instance.link,
       'tags': instance.tags,
       'publishDate': instance.publishDate,
-      'owner': instance.owner.toJson(),
+      'owner': instance.owner?.toJson(),
     };

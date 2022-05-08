@@ -12,7 +12,7 @@ class Post {
   final String? link;
   final List<String>? tags;
   final String? publishDate;
-  final User owner;
+  final User? owner;
 
   const Post({
     this.likes,
@@ -22,7 +22,7 @@ class Post {
     this.publishDate,
     this.id,
     this.text,
-    required this.owner,
+    this.owner,
   });
 
   factory Post.fromJson(Map<String, dynamic> json) => _$PostFromJson(json);

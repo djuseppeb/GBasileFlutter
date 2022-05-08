@@ -3,9 +3,9 @@ import 'package:social_network/api/api_post.dart';
 import 'package:social_network/components/post_widget.dart';
 import 'package:social_network/components/top_bar.dart';
 import 'package:social_network/models/post_response.dart';
-
-import '../components/bottom_bar.dart';
-import '../models/post.dart';
+import 'package:social_network/components/bottom_bar.dart';
+import 'package:social_network/models/post.dart';
+import 'package:social_network/models/user.dart';
 
 class Home extends StatefulWidget {
   const Home({Key? key}) : super(key: key);
@@ -21,6 +21,15 @@ class _HomeState extends State<Home> {
   late int _page;
   late bool _hasMorePost;
   late Future<List<Post>> _future;
+
+  //attributi per condividere un Post
+  late String _postMessage;
+  String _postImage = "https://img.dummyapi.io/photo-1564694202779-bc908c327862.jpg";
+  late String _postTags;
+  late List<String> _postTagsList;
+
+  late TextEditingController _messageController;
+  late TextEditingController _tagsController;
 
   Future<List<Post>> _fetchPosts() async {
     final PostResponse result = await ApiPost.getPostList(page: _page);
@@ -41,13 +50,95 @@ class _HomeState extends State<Home> {
     _page = 0;
     _hasMorePost = false;
     _future = _fetchPosts();
+    _messageController = TextEditingController();
+    _tagsController = TextEditingController();
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+
+      floatingActionButton: FloatingActionButton(
+        onPressed: () async {
+          bool popResult = await showModalBottomSheet(
+            isScrollControlled: true,
+            context: context,
+            builder: (context) {
+              return Padding(
+                  padding: EdgeInsets.only(
+                    top: 8,
+                    left: 8,
+                    right: 8,
+                    bottom: MediaQuery.of(context).viewInsets.bottom,
+                  ),
+                child: Column(
+                  mainAxisSize: MainAxisSize.min,
+                  children: [
+                    TextField(
+                      controller: _messageController,
+                      maxLines: 5,
+                      onChanged: (value){
+                        _postMessage = _messageController.text;
+                      },
+                      decoration: const InputDecoration(
+                        hintText: "Scrivi una didascalia...",
+                        icon: Icon(Icons.create),
+                      ),
+                    ),
+                    TextField(
+                      controller: _tagsController, //sono un imbecille
+                      maxLines: 3,
+                      onChanged: (value){
+                        _postTags = _tagsController.text;
+                        print(_postTags);
+                        _postTagsList = _postTags.split(", ");
+                        print(_postTagsList);
+                      },
+                      decoration: const InputDecoration(
+                        hintText: "Aggiungi dei tag separati da una virgola con spazio.",
+                        icon: Icon(Icons.sell),
+                      ),
+                    ),
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceAround,
+                      children: [
+                        TextButton(
+                          child: Text("Annulla"),
+                          onPressed: (){
+                            Navigator.of(context).pop();
+                          },
+                        ),
+                        ElevatedButton(
+                          child: Text("Pubblica"),
+                          onPressed: () async{
+                            User _newUser = const User(id: '60d0fe4f5311236168a109ca', firstName: 'Sara', lastName: 'Andersen');
+                            Post newPost = Post(text: _postMessage, image: _postImage, tags: _postTagsList, owner: _newUser);
+
+                            if(newPost.text == null){
+                              Navigator.of(context).pop();
+                            }
+                            await ApiPost.newPost(newPost);
+                            _postMessage = '';
+                            _messageController.clear();
+                            _postTags = '';
+                            _postTagsList = [];
+                            _tagsController.clear();
+                            Navigator.of(context).pop(true);
+                          },
+                        )
+                      ],
+                    )
+                  ],
+                ),
+              );
+            }
+          );
+        },
+        child: const Icon(Icons.create),
+      ),
+
       appBar: const TopBar(title: "DummySocial"),
-      bottomNavigationBar: BottomBar(currentPage: "home",),
+      bottomNavigationBar: const BottomBar(currentPage: "home",),
       body: RefreshIndicator(
         onRefresh: () {
           setState(() {

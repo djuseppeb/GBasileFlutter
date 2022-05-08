@@ -22,16 +22,16 @@ class PostWidget extends StatelessWidget {
             children: [
               //User data
               GestureDetector(
-                onTap: () => Navigator.push(context, MaterialPageRoute(builder: (context) => Profile(postData.owner.id!))),
+                onTap: () => Navigator.push(context, MaterialPageRoute(builder: (context) => Profile(postData.owner!.id!))),
                 child: Row(
                   children: [
                     CircleAvatar(
                       radius: 24,
-                      backgroundImage: NetworkImage(postData.owner.picture ?? "https://via.placeholder.com/150"),
+                      backgroundImage: NetworkImage(postData.owner?.picture ?? "https://via.placeholder.com/150"),
                     ),
                     const SizedBox(width: 16),
                     Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
-                      Text("${postData.owner.firstName} ${postData.owner.lastName}",
+                      Text("${postData.owner?.firstName} ${postData.owner?.lastName}",
                           style: GoogleFonts.ubuntu(
                               fontSize: 16, color: Colors.black, fontWeight: FontWeight.bold)),
                       if (postData.publishDate != null)
@@ -74,7 +74,8 @@ class PostWidget extends StatelessWidget {
                   //Likes
                   Expanded(
                     child: TextButton(
-                      onPressed: (){},
+                      onPressed: (){
+                      },
                       child: Row(
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: [

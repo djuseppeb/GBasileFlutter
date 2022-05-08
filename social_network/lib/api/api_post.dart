@@ -1,6 +1,7 @@
 import 'dart:convert';
 
 import 'package:http/http.dart' as http;
+import 'package:shared_preferences/shared_preferences.dart';
 
 import 'package:social_network/models/post.dart';
 import 'package:social_network/models/post_response.dart';
@@ -51,8 +52,19 @@ class ApiPost{
 
   //Creazione di un post
   static Future<Post> newPost(Post post) async{
+    SharedPreferences sp = await SharedPreferences.getInstance();
+    String? userId = sp.getString("user");
+
     Map<String, dynamic> _jsonPost = post.toJson();
     _jsonPost.removeWhere((key, value) => value == null);
+
+
+    // Se l'utente non è loggato fermalo
+    if(userId == null){
+      throw Exception("Impossibile pubblicare un commento, effettuare il login");
+    } else {
+      _jsonPost["owner"] = userId;
+    }
 
     final http.Response response = await http.post(
         Uri.parse("$baseUrl/post/create"),
@@ -60,7 +72,7 @@ class ApiPost{
           'app-id': '626fc935e000f620bdf05f17',
           'Content-type' : 'application/json'
         },
-        body: jsonEncode({_jsonPost})
+        body: jsonEncode(_jsonPost)
     );
 
     if(response.statusCode == 200){
