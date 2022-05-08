@@ -7,6 +7,8 @@ import 'package:social_network/components/bottom_bar.dart';
 import 'package:social_network/models/post.dart';
 import 'package:social_network/models/user.dart';
 
+import '../components/settings_sidebar.dart';
+
 class Home extends StatefulWidget {
   const Home({Key? key}) : super(key: key);
 
@@ -138,6 +140,7 @@ class _HomeState extends State<Home> {
       ),
 
       appBar: const TopBar(title: "DummySocial"),
+      endDrawer: const SettingsSidebar(),
       bottomNavigationBar: const BottomBar(currentPage: "home",),
       body: RefreshIndicator(
         onRefresh: () {

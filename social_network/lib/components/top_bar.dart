@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:shared_preferences/shared_preferences.dart';
 
 class TopBar extends StatelessWidget with PreferredSizeWidget{
   final String title;
@@ -17,19 +16,16 @@ class TopBar extends StatelessWidget with PreferredSizeWidget{
       backgroundColor: Colors.transparent,
       elevation: 0,
       iconTheme: IconThemeData(color: Colors.black54),
-      /*actions: [
+      actions: [
         IconButton(
-          onPressed: () async {
-            SharedPreferences sp = await SharedPreferences.getInstance();
-            sp.setBool('logged', false);
-            sp.setString('user', '');
-            Navigator.of(context).pushNamedAndRemoveUntil(
-                '/', (Route<dynamic> route) => false);
+          onPressed: () {
+            if (Scaffold.of(context).hasEndDrawer){
+              Scaffold.of(context).openEndDrawer();
+            }
           },
-          icon: const Icon(Icons.logout),
-          color: Colors.black,
-        )
-      ],*/
+          icon: const Icon(Icons.settings),
+        ),
+      ],
     );
   }
 }

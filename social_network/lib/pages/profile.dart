@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:social_network/api/api_user.dart';
 import 'package:social_network/components/bottom_bar.dart';
+import 'package:social_network/components/settings_sidebar.dart';
+import 'package:social_network/components/top_bar.dart';
 
 import '../api/api_post.dart';
 import '../components/intestazione.dart';
@@ -68,6 +70,8 @@ class _ProfileState extends State<Profile> {
   Widget build(BuildContext context) {
 
     return Scaffold(
+      appBar: const TopBar(title: 'Profilo',),
+      endDrawer: const SettingsSidebar(),
       bottomNavigationBar: const BottomBar(currentPage: "profile",),
       body: SafeArea(
         child: ListView(
