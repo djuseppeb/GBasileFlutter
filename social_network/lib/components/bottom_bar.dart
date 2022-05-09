@@ -18,19 +18,19 @@ class BottomBar extends StatelessWidget {
                  Navigator.of(context).pushNamedAndRemoveUntil('/home', (Route<dynamic> route) => false);
                }
              },
-             icon: Icon(Icons.home, color: (currentPage == "home") ? Colors.pinkAccent : Colors.black87),
+             icon: Icon(Icons.home, color: (currentPage == "home") ? Colors.deepPurpleAccent.shade200 : Colors.black87),
          ),
          IconButton(
            onPressed: (){
              //Navigator.of(context).pushNamed("/home");
            },
-           icon: Icon(Icons.search, color: (currentPage == "search") ? Colors.pinkAccent : Colors.black87),
+           icon: Icon(Icons.search, color: (currentPage == "search") ? Colors.deepPurpleAccent.shade200 : Colors.black87),
          ),
          IconButton(
            onPressed: (){
              //Navigator.of(context).pushNamed("/home");
            },
-           icon: Icon(Icons.people, color: (currentPage == "users") ? Colors.pinkAccent : Colors.black87),
+           icon: Icon(Icons.people, color: (currentPage == "users") ? Colors.deepPurpleAccent.shade200 : Colors.black87),
          ),
          IconButton(
            onPressed: () async{
@@ -40,7 +40,7 @@ class BottomBar extends StatelessWidget {
                Navigator.push(context, MaterialPageRoute(builder: (context) => Profile(userId!)));
              }
            },
-           icon: Icon(Icons.face, color: (currentPage == "profile") ? Colors.pinkAccent : Colors.black87),
+           icon: Icon(Icons.face, color: (currentPage == "profile") ? Colors.deepPurpleAccent.shade200 : Colors.black87),
          )
        ],
      ),

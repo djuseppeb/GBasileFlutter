@@ -82,9 +82,9 @@ class ApiPost{
   }
 
   //Modifica di un post
-  static Future<Post> updatePost(String id, Post postData) async{
-    Map<String, dynamic> _jsonPost = postData.toJson();
-    _jsonPost.removeWhere((key, value) => value == null);
+  static Future<Post> updatePost(String id, String newText, List<String> newTags) async{
+    //Map<String, dynamic> _jsonPost = postData.toJson();
+    //_jsonPost.removeWhere((key, value) => value == null);
 
     final http.Response response = await http.put(
         Uri.parse("$baseUrl/post/$id"),
@@ -92,7 +92,10 @@ class ApiPost{
           'app-id': '626fc935e000f620bdf05f17',
           'Content-type' : 'application/json'
         },
-        body: jsonEncode({_jsonPost})
+        body: jsonEncode({
+          'text' : newText,
+          'tags' : newTags
+        })
     );
 
     if(response.statusCode == 200){

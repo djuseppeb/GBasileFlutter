@@ -15,16 +15,15 @@ class TopBar extends StatelessWidget with PreferredSizeWidget{
       centerTitle: true,
       backgroundColor: Colors.transparent,
       elevation: 0,
-      iconTheme: IconThemeData(color: Colors.black54),
+      iconTheme: const IconThemeData(color: Colors.black54),
       actions: [
-        IconButton(
-          onPressed: () {
-            if (Scaffold.of(context).hasEndDrawer){
-              Scaffold.of(context).openEndDrawer();
-            }
-          },
-          icon: const Icon(Icons.settings),
-        ),
+        if (Scaffold.of(context).hasEndDrawer)
+          IconButton(
+            onPressed: () {
+                Scaffold.of(context).openEndDrawer();
+            },
+            icon: const Icon(Icons.settings),
+          ),
       ],
     );
   }

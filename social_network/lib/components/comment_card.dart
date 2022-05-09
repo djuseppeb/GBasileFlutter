@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:intl/intl.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import 'package:social_network/models/comment.dart';
 
 class CommentCard extends StatelessWidget {
@@ -9,6 +10,7 @@ class CommentCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+
     return Card(
       child: Padding(
         padding: const EdgeInsets.all(8.0),
@@ -31,6 +33,17 @@ class CommentCard extends StatelessWidget {
                   ],
                 ),
               ),
+            ),
+            IconButton(
+              icon: const Icon(Icons.more_vert_rounded),
+              onPressed: () async {
+                SharedPreferences sp = await SharedPreferences.getInstance();
+                String? userId = sp.getString("user");
+
+                if(userId == commentData.owner.id){
+                  print("Editing");
+                }
+              },
             )
           ],
         ),

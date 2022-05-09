@@ -1,14 +1,39 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:intl/intl.dart';
+import 'package:social_network/components/post_modal.dart';
 import 'package:social_network/pages/post_comments.dart';
-
 import '../models/post.dart';
 import '../pages/profile.dart';
 
-class PostWidget extends StatelessWidget {
+class PostWidget extends StatefulWidget {
   final Post postData;
-  const PostWidget(this.postData, {Key? key}) : super(key: key);
+  final Function? callback;
+  const PostWidget(this.postData, {Key? key, this.callback}) : super(key: key);
+
+  @override
+  State<PostWidget> createState() => _PostWidgetState();
+}
+
+class _PostWidgetState extends State<PostWidget> {
+
+  void editPost() async {
+    bool popResult = await showModalBottomSheet(
+        isScrollControlled: true,
+        context: context,
+        builder: (context) {
+          return PostModal(post: widget.postData,);
+        }
+    );
+    if(popResult == true){
+      setState(() {
+        if (widget.callback != null) {
+          widget.callback!();
+        }
+      });
+    }
+  }
+
 
   @override
   Widget build(BuildContext context) {
@@ -22,47 +47,58 @@ class PostWidget extends StatelessWidget {
             children: [
               //User data
               GestureDetector(
-                onTap: () => Navigator.push(context, MaterialPageRoute(builder: (context) => Profile(postData.owner!.id!))),
+                onTap: () => Navigator.push(context, MaterialPageRoute(builder: (context) => Profile(widget.postData.owner!.id!))),
                 child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
-                    CircleAvatar(
-                      radius: 24,
-                      backgroundImage: NetworkImage(postData.owner?.picture ?? "https://via.placeholder.com/150"),
+                    Row(
+                      children: [
+                        CircleAvatar(
+                          radius: 24,
+                          backgroundImage: NetworkImage(widget.postData.owner?.picture ?? "https://via.placeholder.com/150"),
+                        ),
+                        const SizedBox(width: 16),
+                        Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
+                          Text("${widget.postData.owner?.firstName} ${widget.postData.owner?.lastName}",
+                              style: GoogleFonts.ubuntu(
+                                  fontSize: 16, color: Colors.black, fontWeight: FontWeight.bold)),
+                          if (widget.postData.publishDate != null)
+                            Text(DateFormat.yMMMMd('it_IT').add_Hm().format(DateTime.parse(widget.postData.publishDate!)),
+                              style: GoogleFonts.ubuntu(fontSize: 16, color: Colors.black54)),
+                        ]),
+                      ],
                     ),
-                    const SizedBox(width: 16),
-                    Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
-                      Text("${postData.owner?.firstName} ${postData.owner?.lastName}",
-                          style: GoogleFonts.ubuntu(
-                              fontSize: 16, color: Colors.black, fontWeight: FontWeight.bold)),
-                      if (postData.publishDate != null)
-                        Text(DateFormat.yMMMMd('it_IT').add_Hm().format(DateTime.parse(postData.publishDate!)),
-                          style: GoogleFonts.ubuntu(fontSize: 16, color: Colors.black54)),
-                    ])
+                    IconButton(
+                      icon: const Icon(Icons.more_vert),
+                      onPressed: () {
+                        editPost();
+                        },
+                    )
                   ],
                 ),
               ),
               //Post data
               //Didascalia
-              if(postData.text != null)
+              if(widget.postData.text != null)
                 Padding(
                   padding: const EdgeInsets.symmetric(vertical: 8),
-                  child: Text((postData.text!), style: GoogleFonts.ubuntu(fontSize: 16, color: Colors.black)),
+                  child: Text((widget.postData.text!), style: GoogleFonts.ubuntu(fontSize: 16, color: Colors.black)),
                 ),
 
               //Immagine
-              if(postData.image != null)
+              if(widget.postData.image != null)
                 Padding(
                   padding: const EdgeInsets.symmetric(vertical: 8.0),
-                  child: Image.network(postData.image!),
+                  child: Image.network(widget.postData.image!),
                 ),
 
               //Lista dei tag
-              if (postData.tags != null)
+              if (widget.postData.tags != null)
                 Padding(
                   padding: const EdgeInsets.symmetric(vertical: 8),
                   child: Wrap(
                     spacing: 6,
-                    children:postData.tags!.map((tag) => Chip(label: Text(tag))).toList(),
+                    children:widget.postData.tags!.map((tag) => Chip(label: Text(tag))).toList(),
                   ),
                 ),
 
@@ -80,7 +116,7 @@ class PostWidget extends StatelessWidget {
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: [
                           const Icon(Icons.thumb_up_rounded, color: Colors.black87),
-                          Text("${postData.likes ?? 0}", style: GoogleFonts.ubuntu(fontSize: 16, color: Colors.black))
+                          Text("${widget.postData.likes ?? 0}", style: GoogleFonts.ubuntu(fontSize: 16, color: Colors.black))
                         ],
                       ),
                     ),
@@ -89,7 +125,7 @@ class PostWidget extends StatelessWidget {
                   Expanded(
                     child: TextButton(
                       onPressed: () {
-                        Navigator.push(context, MaterialPageRoute(builder: (context) => PostComments(postData.id!)));
+                        Navigator.push(context, MaterialPageRoute(builder: (context) => PostComments(widget.postData.id!)));
                       },
                       child: Row(
                         mainAxisAlignment: MainAxisAlignment.center,

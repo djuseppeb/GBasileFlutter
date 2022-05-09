@@ -43,6 +43,69 @@ class _PostCommentsState extends State<PostComments> {
     _future = _fetchComments();
   }
 
+  Future<void> newComment() async {
+    {
+      bool popResult = await showModalBottomSheet(
+          isScrollControlled: true,
+          context: context,
+          builder: (context){
+            return Padding(
+              padding: EdgeInsets.only(
+                top: 8,
+                left: 8,
+                right: 8,
+                bottom: MediaQuery.of(context).viewInsets.bottom,
+              ),
+              child: Column(
+                mainAxisSize: MainAxisSize.min,
+                children: [
+                  TextField(
+                    autofocus: true,
+                    controller: _textEditingController,
+                    maxLines: 5,
+                    onChanged: (value){
+                      _message = _textEditingController.text;
+                    },
+                  ),
+
+                  Row(
+                    children: [
+                      TextButton(
+                          onPressed: (){
+                            _message = null;
+                            _textEditingController.clear();
+                            Navigator.of(context).pop();
+                          },
+                          child: const Text("Annulla")
+                      ),
+                      TextButton(
+                          onPressed: () async{
+                            if(_message == null || _message!.isEmpty){
+                              Navigator.of(context).pop();
+                            }
+                            await ApiComment.newCommentFromString(widget.postId, _message!);
+                            _message = null;
+                            _textEditingController.clear();
+                            Navigator.of(context).pop(true);
+                          },
+                          child: const Text("Pubblica")
+                      )
+                    ],
+                  )
+                ],
+              ),
+            );
+          }
+      );
+      if(popResult){
+        setState(() {
+          initVariables();
+        });
+      }
+    }
+  }
+
+
   @override
   void initState() {
     super.initState();
@@ -56,65 +119,7 @@ class _PostCommentsState extends State<PostComments> {
       appBar: const TopBar(title: "Commenti",),
       floatingActionButton : FloatingActionButton(
         child: const Icon(Icons.add),
-        onPressed: () async{
-          bool popResult = await showModalBottomSheet(
-            isScrollControlled: true,
-            context: context,
-            builder: (context){
-              return Padding(
-                padding: EdgeInsets.only(
-                    top: 8,
-                    left: 8,
-                    right: 8,
-                    bottom: MediaQuery.of(context).viewInsets.bottom,
-                ),
-                child: Column(
-                  mainAxisSize: MainAxisSize.min,
-                  children: [
-                    TextField(
-                      autofocus: true,
-                      controller: _textEditingController,
-                      maxLines: 5,
-                      onChanged: (value){
-                        _message = _textEditingController.text;
-                      },
-                    ),
-                    
-                    Row(
-                      children: [
-                        TextButton(
-                            onPressed: (){
-                              _message = null;
-                              _textEditingController.clear();
-                              Navigator.of(context).pop();
-                            },
-                            child: Text("Annulla")
-                        ),
-                        TextButton(
-                            onPressed: () async{
-                              if(_message == null || _message!.isEmpty){
-                                Navigator.of(context).pop();
-                              }
-                              await ApiComment.newCommentFromString(widget.postId, _message!);
-                              _message = null;
-                              _textEditingController.clear();
-                              Navigator.of(context).pop(true);
-                            },
-                            child: Text("Pubblica")
-                        )
-                      ],
-                    )
-                  ],
-                ),
-              );
-            }
-          );
-          if(popResult){
-            setState(() {
-              initVariables();
-            });
-          }
-        },
+        onPressed: () { newComment(); },
       ),
       body: SafeArea(
         child: FutureBuilder(
