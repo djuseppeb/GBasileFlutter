@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:streaming_shared_preferences/streaming_shared_preferences.dart';
 import 'package:travel/components/app_drawer.dart';
-import 'package:travel/components/carousel_title.dart';
 import 'package:travel/components/favorite_button.dart';
 import 'package:travel/components/search_card.dart';
 import 'package:travel/components/top_bar.dart';
@@ -48,3 +47,5 @@ class Favorites extends StatelessWidget {
     );
   }
 }
+
+//TODO: questa pagina è un po' buggata
