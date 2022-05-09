@@ -3,6 +3,7 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:intl/intl.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:social_network/api/api_post.dart';
+import 'package:social_network/components/dropdown_post.dart';
 import 'package:social_network/components/post_modal.dart';
 import 'package:social_network/pages/post_comments.dart';
 import '../models/post.dart';
@@ -43,6 +44,38 @@ class _PostWidgetState extends State<PostWidget> {
         }
       });
     }
+  }
+
+  void deletePost() async {
+    showDialog(
+        context: context,
+        builder: (context) => AlertDialog(
+          title: const Text("Vuoi davvero eliminare il post?"),
+          content: const Text("Questa azione non è reversibile, il post verrà perduto per sempre!"),
+          actions: [
+            TextButton(
+                onPressed: () async{
+                  if(widget.postData.id != null) {
+                    await ApiPost.deletePost(widget.postData.id!);
+                    setState(() {
+                      if (widget.callback != null) {
+                        widget.callback!();
+                      }
+                    });
+                  }
+                  Navigator.of(context).pop;
+                },
+                child: const Text("Sì!")
+            ),
+            TextButton(
+                onPressed: Navigator.of(context).pop,
+                child: const Text("No")
+            ),
+
+          ],
+        ),
+      barrierDismissible: false,
+        );
   }
 
   initPref () async {
@@ -112,12 +145,7 @@ class _PostWidgetState extends State<PostWidget> {
                       ],
                     ),
                     if (widget.postData.owner?.id == userId)
-                      IconButton(
-                        icon: const Icon(Icons.more_vert),
-                        onPressed: () {
-                          editPost();
-                          },
-                      )
+                      DropdownPost(callEdit: editPost, callDelete: deletePost,),
                   ],
                 ),
               ),

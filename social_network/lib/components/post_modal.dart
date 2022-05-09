@@ -99,14 +99,14 @@ class _PostModalState extends State<PostModal> {
                   Navigator.of(context).pop();
                 },
               ),
-              if (widget.post != null)
+              /*if (widget.post != null)
                 TextButton(
                   child: const Text("Elimina", style: TextStyle(color: Colors.red),),
                   onPressed: () async{
                     await ApiPost.deletePost(widget.post!.id!);
                     Navigator.of(context).pop(true);
                   }
-                ),
+                ),*/
               ElevatedButton(
                 child: const Text("Pubblica"),
                 onPressed: () async{
