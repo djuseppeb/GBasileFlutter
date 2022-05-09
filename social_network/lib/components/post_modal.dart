@@ -110,20 +110,29 @@ class _PostModalState extends State<PostModal> {
               ElevatedButton(
                 child: const Text("Pubblica"),
                 onPressed: () async{
-                  if (widget.post == null){
-                    User _newUser = const User(id: '60d0fe4f5311236168a109ca', firstName: 'Sara', lastName: 'Andersen');
-                    Post newPost = Post(text: _postMessage, image: _postImage, tags: _postTagsList, owner: _newUser);
+                  if (_messageController.text.isNotEmpty) {
+                    if (widget.post == null) {
+                      User _newUser = const User(
+                          id: '60d0fe4f5311236168a109ca',
+                          firstName: 'Sara',
+                          lastName: 'Andersen');
+                      Post newPost = Post(
+                          text: _postMessage,
+                          image: _postImage,
+                          tags: _postTagsList,
+                          owner: _newUser);
 
-                    if(newPost.text == null){
-                      Navigator.of(context).pop();
+                      if (newPost.text == null) {
+                        Navigator.of(context).pop();
+                      }
+
+                      await ApiPost.newPost(newPost);
+                      svuotaForm();
+                      Navigator.of(context).pop(true);
+                    } else {
+                      await ApiPost.updatePost(Post(id: widget.post?.id, text: _postMessage, tags: _postTagsList, owner: const User(firstName: "A", lastName: "B")));
+                      Navigator.of(context).pop(true);
                     }
-
-                    await ApiPost.newPost(newPost);
-                    svuotaForm();
-                    Navigator.of(context).pop(true);
-                  } else {
-                    await ApiPost.updatePost(widget.post!.id!, _postMessage, _postTagsList);
-                    Navigator.of(context).pop(true);
                   }
                 },
               )

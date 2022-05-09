@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:intl/intl.dart';
+import 'package:shared_preferences/shared_preferences.dart';
+import 'package:social_network/api/api_post.dart';
 import 'package:social_network/components/post_modal.dart';
 import 'package:social_network/pages/post_comments.dart';
 import '../models/post.dart';
@@ -16,6 +18,15 @@ class PostWidget extends StatefulWidget {
 }
 
 class _PostWidgetState extends State<PostWidget> {
+  String? userId;
+
+  late SharedPreferences _sp;
+
+  //variabili per i like
+  bool _liked = false;
+  late int _numLike;
+  late List<String> _listaLike;
+
 
   void editPost() async {
     bool popResult = await showModalBottomSheet(
@@ -32,6 +43,38 @@ class _PostWidgetState extends State<PostWidget> {
         }
       });
     }
+  }
+
+  initPref () async {
+    SharedPreferences sp = await SharedPreferences.getInstance();
+    setState(() {
+      userId = sp.getString('user') ?? '';
+      final listaLike = sp.getStringList('like_$userId') ?? [];
+      _liked = listaLike.contains(widget.postData.id);
+      _listaLike = listaLike;
+      _sp = sp;
+    });
+  }
+
+  toggleLike() async{
+    _liked ? _listaLike.remove(widget.postData.id) : _listaLike.add(widget.postData.id!);
+
+    await _sp.setStringList('like_$userId', _listaLike);
+
+    _liked ? _numLike-- : _numLike++;
+    
+    await ApiPost.updatePost(Post(id: widget.postData.id, likes: _numLike));
+
+    setState(() {
+      _liked = !_liked;
+    });
+  }
+
+  @override
+  void initState() {
+    initPref();
+    _numLike = widget.postData.likes ?? 0;
+    super.initState();
   }
 
 
@@ -68,12 +111,13 @@ class _PostWidgetState extends State<PostWidget> {
                         ]),
                       ],
                     ),
-                    IconButton(
-                      icon: const Icon(Icons.more_vert),
-                      onPressed: () {
-                        editPost();
-                        },
-                    )
+                    if (widget.postData.owner?.id == userId)
+                      IconButton(
+                        icon: const Icon(Icons.more_vert),
+                        onPressed: () {
+                          editPost();
+                          },
+                      )
                   ],
                 ),
               ),
@@ -111,12 +155,16 @@ class _PostWidgetState extends State<PostWidget> {
                   Expanded(
                     child: TextButton(
                       onPressed: (){
+                        setState(() {
+                          toggleLike();
+                        });
+
                       },
                       child: Row(
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: [
-                          const Icon(Icons.thumb_up_rounded, color: Colors.black87),
-                          Text("${widget.postData.likes ?? 0}", style: GoogleFonts.ubuntu(fontSize: 16, color: Colors.black))
+                          Icon(Icons.thumb_up_rounded, color: _liked ? Colors.pink : Colors.black87),
+                          Text("$_numLike", style: GoogleFonts.ubuntu(fontSize: 16, color: Colors.black))
                         ],
                       ),
                     ),
