@@ -201,7 +201,7 @@ class _PostWidgetState extends State<PostWidget> {
                   Expanded(
                     child: TextButton(
                       onPressed: () {
-                        Navigator.push(context, MaterialPageRoute(builder: (context) => PostComments(widget.postData.id!, postData: widget.postData,)));
+                        Navigator.push(context, MaterialPageRoute(builder: (context) => PostComments(postData: widget.postData,)));
                       },
                       child: Row(
                         mainAxisAlignment: MainAxisAlignment.center,

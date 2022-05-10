@@ -9,9 +9,8 @@ import '../api/api_comment.dart';
 import '../components/comment_card.dart';
 
 class PostComments extends StatefulWidget {
-  final String postId;
   final Post postData;
-  const PostComments(this.postId, {required this.postData, Key? key}) : super(key: key);
+  const PostComments({required this.postData, Key? key}) : super(key: key);
 
   @override
   State<PostComments> createState() => _PostCommentsState();
@@ -100,7 +99,9 @@ class _PostCommentsState extends State<PostComments> {
                             if(_message == null || _message!.isEmpty){
                               Navigator.of(context).pop();
                             }
-                            await ApiComment.newCommentFromString(widget.postId, _message!);
+                            if (widget.postData.id != null) {
+                              await ApiComment.newCommentFromString(widget.postData.id!, _message!);
+                            } throw Exception("Post non trovato");
                             _message = null;
                             _textEditingController.clear();
                             Navigator.of(context).pop(true);
