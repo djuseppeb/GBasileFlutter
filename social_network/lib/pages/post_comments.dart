@@ -69,6 +69,7 @@ class _PostCommentsState extends State<PostComments> {
                   ),
 
                   Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceAround,
                     children: [
                       TextButton(
                           onPressed: (){
@@ -78,7 +79,7 @@ class _PostCommentsState extends State<PostComments> {
                           },
                           child: const Text("Annulla")
                       ),
-                      TextButton(
+                      ElevatedButton(
                           onPressed: () async{
                             if(_message == null || _message!.isEmpty){
                               Navigator.of(context).pop();
@@ -117,48 +118,69 @@ class _PostCommentsState extends State<PostComments> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: const TopBar(title: "Commenti",),
-      floatingActionButton : FloatingActionButton(
-        child: const Icon(Icons.add),
-        onPressed: () { newComment(); },
-      ),
       body: SafeArea(
-        child: FutureBuilder(
-          future: _future,
-          builder: (context, snapshot){
-            if(snapshot.data!=null && snapshot.data is List<Comment>){
-              final _listCommentiVisualizzati = (snapshot.data as List<Comment>);
+        child: Column(
+          children: [
+            Expanded(
+              child: FutureBuilder(
+                future: _future,
+                builder: (context, snapshot){
+                  if(snapshot.data!=null && snapshot.data is List<Comment>){
+                    final _listCommentiVisualizzati = (snapshot.data as List<Comment>);
 
-              if(_listCommentiVisualizzati.isEmpty){
-                return Center(
-                    child: Text("Ancora nessun commento :(", style: GoogleFonts.ubuntu(fontSize: 24, color: Colors.black54,)));
-              }
+                    if(_listCommentiVisualizzati.isEmpty){
+                      return Center(
+                          child: Text("Ancora nessun commento :(", style: GoogleFonts.ubuntu(fontSize: 24, color: Colors.black54,)));
+                    }
 
-              return ListView.builder(
-                itemCount: _listCommentiVisualizzati.length + (_hasMoreComments ? 1 : 0),
-                itemBuilder: (context, index){
+                    return ListView.builder(
+                      itemCount: _listCommentiVisualizzati.length + (_hasMoreComments ? 1 : 0),
+                      itemBuilder: (context, index){
 
-                  if(index == _listCommentiVisualizzati.length){
-                    _future = _fetchComments();
-                    // nel frattempo che carico, mostro un simbolo di attesa
-                    return const Center(child: CircularProgressIndicator(),);
+                        if(index == _listCommentiVisualizzati.length){
+                          _future = _fetchComments();
+                          // nel frattempo che carico, mostro un simbolo di attesa
+                          return const Center(child: CircularProgressIndicator(),);
+                        }
+
+                        return CommentCard(_listCommentiVisualizzati[index]);
+                      }
+                    );
                   }
 
-                  return CommentCard(_listCommentiVisualizzati[index]);
-                }
-              );
-            }
+                  if (snapshot.hasError){
+                    return Center(
+                        child: Text("Errore nel caricamento: ${snapshot.error}", style: const TextStyle(fontSize: 24),)
+                    );
+                  }
 
-            if (snapshot.hasError){
-              return Center(
-                  child: Text("Errore nel caricamento: ${snapshot.error}", style: const TextStyle(fontSize: 24),)
-              );
-            }
+                  return const Center(
+                      child: CircularProgressIndicator()
+                  );
 
-            return const Center(
-                child: CircularProgressIndicator()
-            );
+                },
+              ),
+            ),
 
-          },
+            GestureDetector(
+              child: const Padding(
+                padding: EdgeInsets.symmetric(horizontal: 8.0, vertical: 2),
+                child: TextField(
+                  enabled: false,
+                  decoration: InputDecoration(
+                      disabledBorder: OutlineInputBorder(
+                          borderRadius: BorderRadius.all(Radius.circular(32)),
+                          borderSide: BorderSide(
+                            color: Colors.black54,
+                          )
+                      ),
+                      hintText: "Lascia un commento"
+                  ),
+                ),
+              ),
+              onTap: () { newComment(); },
+            )
+          ],
         )
       ),
     );

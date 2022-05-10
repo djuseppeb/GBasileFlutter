@@ -63,12 +63,12 @@ class _PostWidgetState extends State<PostWidget> {
                       }
                     });
                   }
-                  Navigator.of(context).pop;
+                  Navigator.of(context).pop();
                 },
                 child: const Text("Sì!")
             ),
             TextButton(
-                onPressed: Navigator.of(context).pop,
+                onPressed: () => Navigator.of(context).pop(),
                 child: const Text("No")
             ),
 

@@ -60,7 +60,7 @@ class ApiUser{
           'app-id': '626fc935e000f620bdf05f17',
           'Content-type' : 'application/json'
         },
-        body: jsonEncode({_jsonUser})
+        body: jsonEncode(_jsonUser)
     );
 
     if(response.statusCode == 200){

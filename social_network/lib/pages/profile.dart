@@ -49,18 +49,19 @@ class _ProfileState extends State<Profile> {
     return _listaPost;
   }
 
-
-  //InitState
-  @override
-  void initState() {
-    _futureUser = _fetchUserData(widget.userId);
-
+  initVars(){
     _listaPost = [];
     _skipPost = 0;
     _page = 0;
     _hasMorePost = false;
     _futurePost = _fetchPostData();
+  }
 
+  //InitState
+  @override
+  void initState() {
+    _futureUser = _fetchUserData(widget.userId);
+    initVars();
     super.initState();
   }
 
@@ -118,7 +119,7 @@ class _ProfileState extends State<Profile> {
                         return const Center(child: CircularProgressIndicator(),);
                       }
                       //Stampo la card con i dati del post
-                      return PostWidget(_listPostVisualizzati[index]);
+                      return PostWidget(_listPostVisualizzati[index], callback: initVars,);
                     },
                   );
                 }
