@@ -27,12 +27,6 @@ class BottomBar extends StatelessWidget {
            icon: Icon(Icons.search, color: (currentPage == "search") ? Colors.deepPurpleAccent.shade200 : Colors.black87),
          ),
          IconButton(
-           onPressed: (){
-             //Navigator.of(context).pushNamed("/home");
-           },
-           icon: Icon(Icons.people, color: (currentPage == "users") ? Colors.deepPurpleAccent.shade200 : Colors.black87),
-         ),
-         IconButton(
            onPressed: () async{
              if (currentPage != "profile"){
                SharedPreferences sp = await SharedPreferences.getInstance();
