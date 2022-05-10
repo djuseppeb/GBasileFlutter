@@ -3,12 +3,14 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:intl/intl.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:social_network/models/comment.dart';
+import 'package:social_network/models/post.dart';
 
 import '../api/api_comment.dart';
 
 class CommentCard extends StatefulWidget {
   final Comment commentData;
-  const CommentCard(this.commentData, {Key? key}) : super(key: key);
+  final Post postData;
+  const CommentCard(this.commentData, this.postData, {Key? key}) : super(key: key);
 
   @override
   State<CommentCard> createState() => _CommentCardState();
@@ -87,7 +89,7 @@ class _CommentCardState extends State<CommentCard> {
                   SharedPreferences sp = await SharedPreferences.getInstance();
                   String? userId = sp.getString("user");
 
-                  if(userId == widget.commentData.owner.id){
+                  if(userId == widget.commentData.owner.id || userId == widget.postData.owner?.id){
                     deleteComment();
                   }
                 },

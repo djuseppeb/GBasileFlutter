@@ -3,13 +3,15 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:social_network/components/top_bar.dart';
 import 'package:social_network/models/comment.dart';
 import 'package:social_network/models/comment_response.dart';
+import 'package:social_network/models/post.dart';
 
 import '../api/api_comment.dart';
 import '../components/comment_card.dart';
 
 class PostComments extends StatefulWidget {
   final String postId;
-  const PostComments(this.postId, {Key? key}) : super(key: key);
+  final Post postData;
+  const PostComments(this.postId, {required this.postData, Key? key}) : super(key: key);
 
   @override
   State<PostComments> createState() => _PostCommentsState();
@@ -25,14 +27,18 @@ class _PostCommentsState extends State<PostComments> {
   late Future<List<Comment>> _future;
 
   Future<List<Comment>> _fetchComments() async{
-    final CommentResponse result = await ApiComment.getCommentByPost(widget.postId, page: _page);
-    setState(() {
-      _skip = _skip + result.limit;
-      _hasMoreComments = (result.total - _skip) > 0;
-      _page++;
-      _listComment = _listComment + result.data;
-    });
-    return _listComment;
+    if(widget.postData.id != null) {
+      final CommentResponse result =
+          await ApiComment.getCommentByPost(widget.postData.id!, page: _page);
+      setState(() {
+        _skip = _skip + result.limit;
+        _hasMoreComments = (result.total - _skip) > 0;
+        _page++;
+        _listComment = _listComment + result.data;
+      });
+      return _listComment;
+    }
+    throw Exception("Id non trovato");
   }
 
   void initVariables(){
@@ -40,7 +46,17 @@ class _PostCommentsState extends State<PostComments> {
     _skip = 0;
     _page = 0;
     _hasMoreComments = false;
-    _future = _fetchComments();
+
+    try{
+      _future = _fetchComments();
+    } catch (e) {
+      showDialog(context: context, builder: (context) {
+        return AlertDialog(
+          title: const Text("Errore"),
+          content: Text(e.toString()),
+        );
+      });
+    }
   }
 
   Future<void> newComment() async {
@@ -143,7 +159,7 @@ class _PostCommentsState extends State<PostComments> {
                           return const Center(child: CircularProgressIndicator(),);
                         }
 
-                        return CommentCard(_listCommentiVisualizzati[index]);
+                        return CommentCard(_listCommentiVisualizzati[index], widget.postData);
                       }
                     );
                   }
