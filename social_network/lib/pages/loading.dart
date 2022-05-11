@@ -11,14 +11,12 @@ class Loading extends StatefulWidget {
 }
 
 class _LoadingState extends State<Loading> {
-  late String _userId;
   bool _logged = false;
 
   void initLogCheck() async{
     SharedPreferences sp = await SharedPreferences.getInstance();
     setState(() {
       _logged = sp.getBool('logged') ?? false;
-      _userId = sp.getString('user') ?? '';
     });
   }
 

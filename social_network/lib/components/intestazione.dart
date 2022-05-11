@@ -35,8 +35,8 @@ class Intestazione extends StatelessWidget {
           ],
         ),
 
-        SizedBox(height: 16,),
-        Divider(thickness: 2,),
+        const SizedBox(height: 16,),
+        const Divider(thickness: 2,),
         //Informazioni
         Column(
           children: [
@@ -54,7 +54,7 @@ class Intestazione extends StatelessWidget {
           ],
         ),
 
-        Divider(thickness: 2,),
+        const Divider(thickness: 2,),
       ],
     );
   }
