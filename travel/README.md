@@ -1,16 +1,11 @@
 # travel
 
-Una app di viaggi
+Mockup di una app di viaggi.
 
-## Getting Started
+Sono presenti varie mete tra cui scegliere da aggiungere ai preferiti, le mete sono contenute in una lista di oggetti.
 
-This project is a starting point for a Flutter application.
+Per ogni meta è possibile visualizzarne i dettagli in una pagina generata dinamicamente.
 
-A few resources to get you started if this is your first Flutter project:
+La pagina di ricerca permette di filtrare gli elementi della lista con varie opzioni ed è presente la possibiltà di aggiungere alcune mete ai preferiti tramite la libreria StreamingSharedPreferences.
 
-- [Lab: Write your first Flutter app](https://flutter.dev/docs/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://flutter.dev/docs/cookbook)
-
-For help getting started with Flutter, view our
-[online documentation](https://flutter.dev/docs), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
+Il Login non è reale ma accetta qualunque valore.
