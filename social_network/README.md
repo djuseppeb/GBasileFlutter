@@ -1,16 +1,11 @@
 # social_network
 
-Un social network che sfrutta una API pubblica di esempio
+Una simulazione di social network che sfrutta una API pubblica di esempio.
 
-## Getting Started
+L'API utilizzata è consultabile al sito https://dummyapi.io/
 
-This project is a starting point for a Flutter application.
+Sono stati necessari alcuni workaround per implementare alcune funzioni, viste le limitazioni della API pubblica.
 
-A few resources to get you started if this is your first Flutter project:
+All'avvio è possibile scegliere tra due utenti predefiniti con cui loggare, è possibile pubblicare nuovi post e commenti e mettere like ai post, tuttavia non è possibile aggiungere immagini (l'API ammette solo url nel campo immagini).
 
-- [Lab: Write your first Flutter app](https://flutter.dev/docs/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://flutter.dev/docs/cookbook)
-
-For help getting started with Flutter, view our
-[online documentation](https://flutter.dev/docs), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
+L'utente può eliminare i suoi post, i suoi commenti e i commenti sotto ai propri post. Inoltre può modificare alcune informazioni personali. Inoltre, è presente un sistema di ricerca tramite tag.
