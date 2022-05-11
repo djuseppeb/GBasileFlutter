@@ -101,10 +101,11 @@ class _PostCommentsState extends State<PostComments> {
                             }
                             if (widget.postData.id != null) {
                               await ApiComment.newCommentFromString(widget.postData.id!, _message!);
+                              _message = null;
+                              _textEditingController.clear();
+                              Navigator.of(context).pop(true);
                             } throw Exception("Post non trovato");
-                            _message = null;
-                            _textEditingController.clear();
-                            Navigator.of(context).pop(true);
+
                           },
                           child: const Text("Pubblica")
                       )

@@ -22,7 +22,7 @@ class BottomBar extends StatelessWidget {
          ),
          IconButton(
            onPressed: (){
-             //Navigator.of(context).pushNamed("/home");
+             Navigator.of(context).pushNamed("/search");
            },
            icon: Icon(Icons.search, color: (currentPage == "search") ? Colors.deepPurpleAccent.shade200 : Colors.black87),
          ),
