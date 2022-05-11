@@ -12,7 +12,6 @@ class FavoriteButton extends StatefulWidget {
 }
 
 class _FavoriteButtonState extends State<FavoriteButton> {
-  List<String> _preferiti = [];
   bool isFave = false;
 
   initSP() async{
@@ -28,10 +27,11 @@ class _FavoriteButtonState extends State<FavoriteButton> {
     var favorites = sp.getStringList("preferiti", defaultValue: []).getValue();
     if(isFave){
       favorites.remove(widget.meta.city);
+
     } else {
       favorites.add(widget.meta.city);
     }
-    sp.setStringList("preferiti", favorites);
+    await sp.setStringList("preferiti", favorites);
 
     setState(() {
       isFave = !isFave;
@@ -50,9 +50,14 @@ class _FavoriteButtonState extends State<FavoriteButton> {
       decoration: BoxDecoration(
           color: Colors.white,
           borderRadius: BorderRadius.circular(12)),
-      child: IconButton(
-          onPressed: changeSP,
-          icon: isFave ? const Icon(Icons.bookmark, color: Colors.amber) : const Icon(Icons.bookmark_outline, color: Colors.black),
+      child: Column(
+        children: [
+          IconButton(
+              onPressed: () async {await changeSP();},
+              icon: isFave ? const Icon(Icons.bookmark, color: Colors.amber) : const Icon(Icons.bookmark_outline, color: Colors.black),
+          ),
+          Text(widget.meta.city),
+        ],
       ),
     );
   }

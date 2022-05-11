@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:travel/components/app_drawer.dart';
-import 'package:travel/components/category_list.dart';
 import 'package:travel/components/popular_list.dart';
 import 'package:travel/components/search_bar.dart';
 import 'package:travel/components/recommended_list.dart';

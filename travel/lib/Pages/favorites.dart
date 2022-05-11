@@ -35,6 +35,7 @@ class Favorites extends StatelessWidget {
               itemCount: metePreferite.length,
               itemBuilder: (context, index){
                 return Row(
+                  key: UniqueKey(),
                   children: [
                     SearchCard(metePreferite[index]),
                     FavoriteButton(metePreferite[index])
@@ -48,4 +49,3 @@ class Favorites extends StatelessWidget {
   }
 }
 
-//TODO: questa pagina è un po' buggata

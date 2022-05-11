@@ -10,8 +10,8 @@ void main() async {
 }
 
 class MyApp extends StatelessWidget {
-  StreamingSharedPreferences sp;
-  MyApp(this.sp, {Key? key}) : super(key: key);
+  final StreamingSharedPreferences sp;
+  const MyApp(this.sp, {Key? key}) : super(key: key);
 
   // This widget is the root of your application.
   @override
